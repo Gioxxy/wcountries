@@ -47,29 +47,40 @@ final class CountriesAPI {
             sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
             sessionConfiguration.urlCache = cache
             URLSession(configuration: sessionConfiguration).dataTask(with: request, completionHandler: { data, response, error -> Void in
+                
                 if let error = error {
                     print("Network error: " + error.localizedDescription)
-                    onError?("Network error")
+                    DispatchQueue.main.async {
+                        onError?("Network error")
+                    }
                     return
                 }
                 guard let response = response as? HTTPURLResponse else {
                     print("Not a HTTP response")
-                    onError?("Network error")
+                    DispatchQueue.main.async {
+                        onError?("Network error")
+                    }
                     return
                 }
                 guard response.statusCode == 200 else {
                     print("Invalid HTTP status code \(response.statusCode)")
-                    onError?("Network error")
+                    DispatchQueue.main.async {
+                        onError?("Network error")
+                    }
                     return
                 }
                 guard let data = data else {
                     print("No HTTP data")
-                    onError?("Network error")
+                    DispatchQueue.main.async {
+                        onError?("Network error")
+                    }
                     return
                 }
                 
                 cache.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
-                onSuccess?(data)
+                DispatchQueue.main.async {
+                    onSuccess?(data)
+                }
             }).resume()
 //        }
 

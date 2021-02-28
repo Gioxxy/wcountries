@@ -18,6 +18,11 @@
 		F7B8CD1525E9745A00A79AFC /* CountriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD1425E9745A00A79AFC /* CountriesAPI.swift */; };
 		F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD1925E974D500A79AFC /* Extensions.swift */; };
 		F7B8CD1F25E9763200A79AFC /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD1E25E9763200A79AFC /* AppColors.swift */; };
+		F7B8CD2B25E98EE600A79AFC /* MainGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD2A25E98EE600A79AFC /* MainGridView.swift */; };
+		F7B8CD3025EA479D00A79AFC /* MainGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD2F25EA479D00A79AFC /* MainGridViewCell.swift */; };
+		F7B8CD3525EA47CE00A79AFC /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD3425EA47CE00A79AFC /* CountryModel.swift */; };
+		F7B8CD3E25EAEF5400A79AFC /* MainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */; };
+		F7B8CD4625EAF11C00A79AFC /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD4525EAF11C00A79AFC /* MainViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +60,11 @@
 		F7B8CD1425E9745A00A79AFC /* CountriesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAPI.swift; sourceTree = "<group>"; };
 		F7B8CD1925E974D500A79AFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F7B8CD1E25E9763200A79AFC /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		F7B8CD2A25E98EE600A79AFC /* MainGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGridView.swift; sourceTree = "<group>"; };
+		F7B8CD2F25EA479D00A79AFC /* MainGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGridViewCell.swift; sourceTree = "<group>"; };
+		F7B8CD3425EA47CE00A79AFC /* CountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
+		F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainManager.swift; sourceTree = "<group>"; };
+		F7B8CD4525EAF11C00A79AFC /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,8 +173,11 @@
 		F790E0DF25E97058003757F9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				F7B8CD4D25EAF12600A79AFC /* ViewModels */,
+				F7B8CD3925EA47D300A79AFC /* Models */,
 				F7B8CD2325E97FBA00A79AFC /* Views */,
 				F790E0E025E9706A003757F9 /* MainCoordinator.swift */,
+				F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -173,8 +186,26 @@
 			isa = PBXGroup;
 			children = (
 				F790E09A25E96EB0003757F9 /* MainViewController.swift */,
+				F7B8CD2A25E98EE600A79AFC /* MainGridView.swift */,
+				F7B8CD2F25EA479D00A79AFC /* MainGridViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F7B8CD3925EA47D300A79AFC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F7B8CD3425EA47CE00A79AFC /* CountryModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F7B8CD4D25EAF12600A79AFC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F7B8CD4525EAF11C00A79AFC /* MainViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,13 +337,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B8CD3E25EAEF5400A79AFC /* MainManager.swift in Sources */,
 				F7B8CD1525E9745A00A79AFC /* CountriesAPI.swift in Sources */,
+				F7B8CD3025EA479D00A79AFC /* MainGridViewCell.swift in Sources */,
 				F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */,
 				F790E0D425E97011003757F9 /* SwipeBackNavigationController.swift in Sources */,
+				F7B8CD2B25E98EE600A79AFC /* MainGridView.swift in Sources */,
+				F7B8CD3525EA47CE00A79AFC /* CountryModel.swift in Sources */,
 				F790E0E125E9706A003757F9 /* MainCoordinator.swift in Sources */,
 				F7B8CD1F25E9763200A79AFC /* AppColors.swift in Sources */,
 				F790E09B25E96EB0003757F9 /* MainViewController.swift in Sources */,
 				F790E09725E96EB0003757F9 /* AppDelegate.swift in Sources */,
+				F7B8CD4625EAF11C00A79AFC /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

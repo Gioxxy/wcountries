@@ -5,7 +5,7 @@
 //  Created by Gionatan Cernusco on 26/02/21.
 //
 
-import Foundation
+import UIKit
 
 extension URL {
     mutating func appendQueryParam(key: String, value: String?) {
@@ -24,5 +24,38 @@ extension URL {
         params.forEach({ key, value in
             self.appendQueryParam(key: key, value: value)
         })
+    }
+}
+
+extension UIImageView {
+    func imageFromNetwork(url: URL?) {
+        guard let url = url else { return }
+        let cache = URLCache(
+            memoryCapacity: 0,
+            diskCapacity: 100*1024*1024,
+            diskPath: "wcountriesImageCache"
+        )
+//        if let data = cache.cachedResponse(for: URLRequest(url: url))?.data {
+//            guard let image = UIImage(data: data) else { return }
+//            DispatchQueue.main.async() {
+//                self.image = image
+//            }
+//        } else {
+            let sessionConfiguration = URLSessionConfiguration.default
+            sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
+            sessionConfiguration.urlCache = cache
+            URLSession(configuration: sessionConfiguration).dataTask(with: url) { data, response, error in
+                guard
+                    let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                    let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                    let data = data, error == nil,
+                    let image = UIImage(data: data)
+                    else { return }
+                DispatchQueue.main.async() {
+                    cache.storeCachedResponse(CachedURLResponse(response: httpURLResponse, data: data), for: URLRequest(url: url))
+                    self.image = image
+                }
+            }.resume()
+//        }
     }
 }
