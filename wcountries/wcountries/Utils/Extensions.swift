@@ -28,7 +28,7 @@ extension URL {
 }
 
 extension UIImageView {
-    func imageFromNetwork(url: URL?) {
+    func imageFromNetwork(url: URL?, then: ((UIImage)->Void)? = nil) {
         guard let url = url else { return }
         let cache = URLCache(
             memoryCapacity: 0,
@@ -54,6 +54,7 @@ extension UIImageView {
                 DispatchQueue.main.async() {
                     cache.storeCachedResponse(CachedURLResponse(response: httpURLResponse, data: data), for: URLRequest(url: url))
                     self.image = image
+                    then?(image)
                 }
             }.resume()
 //        }

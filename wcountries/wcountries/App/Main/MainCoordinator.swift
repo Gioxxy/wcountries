@@ -9,7 +9,7 @@ import Foundation
 
 class MainCoordinator {
     private var navigationController: SwipeBackNavigationController
-    private var manager: MainManager = MainManager()
+    private var detailCoordinator: DetailCoordinator?
     
     init(navigationController: SwipeBackNavigationController){
         self.navigationController = navigationController
@@ -17,18 +17,15 @@ class MainCoordinator {
     
     func start(){
         let vc = MainViewController()
-        let model: [CountryModel] = [] //TODO: Add request
-        vc.config(self, viewModel: MainViewModel(model: model))
+        let model: [CountryModel] = []
+        vc.config(viewModel: MainViewModel(self, manager: MainManager(), model: model))
         self.navigationController.pushViewController(vc, animated: true)
     }
-    
-    //MARK: - MainViewController
-    func getCountries(onSuccess: ((_ mainModel: MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
-        manager.getCountries(
-            onSuccess: { model in
-                onSuccess?(MainViewModel(model: model))
-            },
-            onError: onError
-        )
+}
+
+extension MainCoordinator: MainViewModelDelegate {
+    func didTapOnCountry(model: CountryModel){
+        detailCoordinator = DetailCoordinator(navigationController: navigationController)
+        detailCoordinator?.start(model: model)
     }
 }

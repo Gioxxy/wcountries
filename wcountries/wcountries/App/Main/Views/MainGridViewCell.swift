@@ -40,7 +40,7 @@ final class MainGridViewCell: UICollectionViewCell {
         return titleLabel
     }()
     
-    func config(viewModel: CountryViewModel) {
+    func config(viewModel: MainViewModel.CountryViewModel) {
         imageView.imageFromNetwork(url: viewModel.imageURL)
         titleLabel.text = viewModel.name
         

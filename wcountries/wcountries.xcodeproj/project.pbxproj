@@ -23,6 +23,9 @@
 		F7B8CD3525EA47CE00A79AFC /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD3425EA47CE00A79AFC /* CountryModel.swift */; };
 		F7B8CD3E25EAEF5400A79AFC /* MainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */; };
 		F7B8CD4625EAF11C00A79AFC /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD4525EAF11C00A79AFC /* MainViewModel.swift */; };
+		F7B8CD5325EBF19500A79AFC /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD5225EBF19500A79AFC /* DetailCoordinator.swift */; };
+		F7B8CD5C25EBF23B00A79AFC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD5B25EBF23B00A79AFC /* DetailViewController.swift */; };
+		F7B8CD6525EBF33100A79AFC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD6425EBF33100A79AFC /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,9 @@
 		F7B8CD3425EA47CE00A79AFC /* CountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
 		F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainManager.swift; sourceTree = "<group>"; };
 		F7B8CD4525EAF11C00A79AFC /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		F7B8CD5225EBF19500A79AFC /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
+		F7B8CD5B25EBF23B00A79AFC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		F7B8CD6425EBF33100A79AFC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +172,7 @@
 			children = (
 				F7733D1725E9740000D9B87C /* API */,
 				F790E0DF25E97058003757F9 /* Main */,
+				F7B8CD5125EBF17300A79AFC /* Detail */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -173,11 +180,11 @@
 		F790E0DF25E97058003757F9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				F7B8CD4D25EAF12600A79AFC /* ViewModels */,
+				F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */,
+				F790E0E025E9706A003757F9 /* MainCoordinator.swift */,
 				F7B8CD3925EA47D300A79AFC /* Models */,
 				F7B8CD2325E97FBA00A79AFC /* Views */,
-				F790E0E025E9706A003757F9 /* MainCoordinator.swift */,
-				F7B8CD3D25EAEF5400A79AFC /* MainManager.swift */,
+				F7B8CD4D25EAF12600A79AFC /* ViewModels */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -204,6 +211,32 @@
 			isa = PBXGroup;
 			children = (
 				F7B8CD4525EAF11C00A79AFC /* MainViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F7B8CD5125EBF17300A79AFC /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				F7B8CD5225EBF19500A79AFC /* DetailCoordinator.swift */,
+				F7B8CD5A25EBF22900A79AFC /* Views */,
+				F7B8CD6325EBF30800A79AFC /* ViewModels */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		F7B8CD5A25EBF22900A79AFC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7B8CD5B25EBF23B00A79AFC /* DetailViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F7B8CD6325EBF30800A79AFC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F7B8CD6425EBF33100A79AFC /* DetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -340,6 +373,7 @@
 				F7B8CD3E25EAEF5400A79AFC /* MainManager.swift in Sources */,
 				F7B8CD1525E9745A00A79AFC /* CountriesAPI.swift in Sources */,
 				F7B8CD3025EA479D00A79AFC /* MainGridViewCell.swift in Sources */,
+				F7B8CD5325EBF19500A79AFC /* DetailCoordinator.swift in Sources */,
 				F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */,
 				F790E0D425E97011003757F9 /* SwipeBackNavigationController.swift in Sources */,
 				F7B8CD2B25E98EE600A79AFC /* MainGridView.swift in Sources */,
@@ -349,6 +383,8 @@
 				F790E09B25E96EB0003757F9 /* MainViewController.swift in Sources */,
 				F790E09725E96EB0003757F9 /* AppDelegate.swift in Sources */,
 				F7B8CD4625EAF11C00A79AFC /* MainViewModel.swift in Sources */,
+				F7B8CD6525EBF33100A79AFC /* DetailViewModel.swift in Sources */,
+				F7B8CD5C25EBF23B00A79AFC /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

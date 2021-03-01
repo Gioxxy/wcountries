@@ -10,7 +10,6 @@ import UIKit
 class MainViewController: UIViewController {
     
     private var viewModel: MainViewModel?
-    private weak var coordinator: MainCoordinator?
     
     private let logo: UIImageView = {
         let logo = UIImageView(image: UIImage(named: "logo"))
@@ -18,10 +17,9 @@ class MainViewController: UIViewController {
         return logo
     }()
     
-    private let mainGridView: MainGridView = MainGridView()
+    private var mainGridView: MainGridView = MainGridView()
 
-    func config(_ coordinator: MainCoordinator, viewModel: MainViewModel){
-        self.coordinator = coordinator
+    func config(viewModel: MainViewModel){
         self.viewModel = viewModel
         
         setupView()
@@ -31,17 +29,6 @@ class MainViewController: UIViewController {
     
     private func setupView(){
         view.backgroundColor = AppColors.background
-        mainGridView.onScrollListener = { scrollView in
-            if scrollView.contentOffset.y < 5 {
-                UIView.animate(withDuration: 0.5) {
-                    self.logo.alpha = 1
-                }
-            } else if self.logo.alpha == 1 {
-                UIView.animate(withDuration: 0.5) {
-                    self.logo.alpha = 0
-                }
-            }
-        }
     }
     
     private func addViews(){
@@ -84,10 +71,9 @@ class MainViewController: UIViewController {
     }
     
     private func fetchData(){
-        coordinator?.getCountries(
+        viewModel?.getCountries(
             onSuccess: { viewModel in
-                self.viewModel = viewModel
-                self.mainGridView.config(viewModel: viewModel.countries)
+                self.mainGridView.config(self, viewModel: viewModel.countries)
                 self.mainGridView.collectionView.reloadData()
             },
             onError: { error in
@@ -98,3 +84,22 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController: MainGridViewDelegate {
+    func onScrollListener(_ gridView: MainGridView, scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 5 {
+            UIView.animate(withDuration: 0.5) {
+                self.logo.alpha = 1
+            }
+        } else if self.logo.alpha == 1 {
+            UIView.animate(withDuration: 0.5) {
+                self.logo.alpha = 0
+            }
+        }
+    }
+    
+    func onItemTap(_ gridView: MainGridView, viewModel: MainViewModel.CountryViewModel) {
+        self.viewModel?.didTapOnCountry(viewModel: viewModel)
+    }
+    
+    
+}

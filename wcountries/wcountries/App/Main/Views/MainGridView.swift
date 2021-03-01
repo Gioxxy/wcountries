@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol MainGridViewDelegate: class {
+    func onScrollListener(_ gridView: MainGridView, scrollView: UIScrollView)
+    func onItemTap(_ gridView: MainGridView, viewModel: MainViewModel.CountryViewModel)
+}
+
 final class MainGridView: UICollectionViewController {
     
-    private var viewModel: [CountryViewModel]?
-    var onScrollListener: ((UIScrollView)->Void)?
+    private var viewModel: [MainViewModel.CountryViewModel]?
+    weak var delegate: MainGridViewDelegate?
     
     init(){
         let inset = UIScreen.main.bounds.width.truncatingRemainder(dividingBy: 173) / 2
@@ -35,9 +40,9 @@ final class MainGridView: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(viewModel: [CountryViewModel]) {
+    func config(_ delegate: MainGridViewDelegate, viewModel: [MainViewModel.CountryViewModel]) {
+        self.delegate = delegate
         self.viewModel = viewModel
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -54,11 +59,13 @@ final class MainGridView: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if let viewModel = viewModel {
+            delegate?.onItemTap(self, viewModel: viewModel[indexPath.row])
+        }
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        onScrollListener?(scrollView)
+        delegate?.onScrollListener(self, scrollView: scrollView)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
