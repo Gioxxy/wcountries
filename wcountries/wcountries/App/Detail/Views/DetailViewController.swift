@@ -11,7 +11,7 @@ class DetailViewController: UIViewController {
     
     private var viewModel: DetailViewModel?
     
-    private let backButtoon: UIButton = {
+    private let backButton: UIButton = {
         let arrowBack = UIButton(type: .custom)
         arrowBack.setImage(UIImage(named: "arrowBack"), for: .normal)
         arrowBack.tintColor = AppColors.accent
@@ -51,24 +51,48 @@ class DetailViewController: UIViewController {
     }()
     
     private let imageViewShadowContainer: UIView = {
-        let imageViewShadowContainer = UIView()
-        imageViewShadowContainer.contentMode = .scaleToFill
-        imageViewShadowContainer.layer.shadowColor = UIColor.black.cgColor
-        imageViewShadowContainer.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        imageViewShadowContainer.layer.shadowRadius = 3
-        imageViewShadowContainer.layer.shadowOpacity = 0.2
-        imageViewShadowContainer.layer.masksToBounds = false
-        imageViewShadowContainer.layer.shouldRasterize = true
-        imageViewShadowContainer.layer.rasterizationScale = UIScreen.main.scale
-        return imageViewShadowContainer
+        let container = UIView()
+        container.contentMode = .scaleAspectFill
+        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        container.layer.shadowRadius = 3
+        container.layer.shadowOpacity = 0.2
+        container.layer.masksToBounds = false
+        container.layer.shouldRasterize = true
+        container.layer.rasterizationScale = UIScreen.main.scale
+        return container
     }()
     
     private let imageView: UIImageView = {
         let imageView: UIImageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
         return imageView
+    }()
+    
+    private let regionImageView: UIImageView = {
+        let imageView: UIImageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 22
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private let currencySimbolLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.font = UIFont(name: "AvenirNext-Bold", size: 23)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let callingCodeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.font = UIFont(name: "AvenirNext-Bold", size: 15)
+        label.textAlignment = .center
+        return label
     }()
     
     func config(viewModel: DetailViewModel) {
@@ -99,6 +123,7 @@ class DetailViewController: UIViewController {
                 }
             }
         )
+        
     }
     
     private func addViews() {
@@ -115,41 +140,57 @@ class DetailViewController: UIViewController {
             globe.centerXAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -(UIScreen.main.bounds.width/7))
         ])
         
-        // Add back button
-        view.addSubview(backButtoon)
-        backButtoon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            backButtoon.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            backButtoon.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 18)
-        ])
-        
         // Add title
         view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: backButtoon.bottomAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
-        ])
         
         // Add subTitle
         view.addSubview(subTitleLabel)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add scrollView
+        let scrollView = UIScrollView()
+        scrollView.contentInset = UIEdgeInsets(top: 300, left: 18, bottom: 18, right: 18)
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
+        
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        // Add back button
+        view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+            backButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 18),
+            
+            titleLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
+            
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor, constant: 5),
             subTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
             subTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
         ])
         
         // Add container
-        view.addSubview(containerView)
+        scrollView.addSubview(containerView)
 //        let bottomInset: CGFloat = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0 > 0 ? 0 : -18
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
-            containerView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18)
+            containerView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            containerView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -36),
+            containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 400)
         ])
         
         // Add image
@@ -161,7 +202,7 @@ class DetailViewController: UIViewController {
             imageView.leadingAnchor.constraint(equalTo: imageViewShadowContainer.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: imageViewShadowContainer.trailingAnchor)
         ])
-        view.addSubview(imageViewShadowContainer)
+        containerView.addSubview(imageViewShadowContainer)
         imageViewShadowContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageViewShadowContainer.centerYAnchor.constraint(equalTo: containerView.topAnchor, constant: -10),
@@ -169,6 +210,90 @@ class DetailViewController: UIViewController {
             imageViewShadowContainer.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 100),
             imageViewShadowContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -100)
         ])
+        
+        // Add horizontal stack container
+        let bubblesStack: UIStackView = UIStackView()
+        bubblesStack.spacing = 15
+        bubblesStack.axis = .horizontal
+        
+        containerView.addSubview(bubblesStack)
+        bubblesStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bubblesStack.topAnchor.constraint(equalTo: imageViewShadowContainer.bottomAnchor, constant: 38),
+            bubblesStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ])
+        
+        viewModel?.getCountry(
+            onSuccess: { [weak self] viewModel in
+                guard let `self` = self else { return }
+                
+                self.regionImageView.imageFromNetwork(url: URL(string: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/320px-Flag_of_Europe.svg.png")!) //TODO Add images and use the local one
+                self.currencySimbolLabel.text = viewModel.currencySimbol
+                self.callingCodeLabel.text = viewModel.callingCode
+                
+                // Add region image
+                let regionImageViewShadowContainer = BubbleView()
+                regionImageViewShadowContainer.config(contentView: self.regionImageView)
+                bubblesStack.addArrangedSubview(regionImageViewShadowContainer)
+                regionImageViewShadowContainer.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    regionImageViewShadowContainer.heightAnchor.constraint(equalToConstant: 44),
+                    regionImageViewShadowContainer.widthAnchor.constraint(equalToConstant: 44)
+                ])
+                
+                // Add currency simbol
+                if viewModel.currencySimbol != nil {
+                    let currencySimbolShadowContainer = BubbleView()
+                    currencySimbolShadowContainer.config(contentView: self.currencySimbolLabel)
+                    bubblesStack.addArrangedSubview(currencySimbolShadowContainer)
+                    currencySimbolShadowContainer.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        currencySimbolShadowContainer.heightAnchor.constraint(equalToConstant: 44),
+                        currencySimbolShadowContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 44)
+                    ])
+                }
+                
+                // Add calling code
+                if viewModel.callingCode != nil {
+                    let callingCodeShadowContainer = BubbleView()
+                    callingCodeShadowContainer.config(contentView: self.callingCodeLabel)
+                    bubblesStack.addArrangedSubview(callingCodeShadowContainer)
+                    callingCodeShadowContainer.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        callingCodeShadowContainer.heightAnchor.constraint(equalToConstant: 44),
+                        callingCodeShadowContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 44)
+                    ])
+                }
+                
+                // Add details
+                let detailsStack = UIStackView()
+                detailsStack.axis = .vertical
+                detailsStack.spacing = 18
+                
+                self.containerView.addSubview(detailsStack)
+                detailsStack.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    detailsStack.topAnchor.constraint(equalTo: bubblesStack.bottomAnchor, constant: 38),
+                    detailsStack.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 18),
+                    detailsStack.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -18),
+                    detailsStack.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: -18)
+                ])
+                
+                // Add native name
+                for detail in viewModel.details {
+                    let nativeNameDetailRow = DetailRow()
+                    nativeNameDetailRow.config(viewModel: detail)
+                    detailsStack.addArrangedSubview(nativeNameDetailRow)
+                }
+            },
+            onError: { error in
+                // TODO: onError
+                print(error)
+            }
+        )
+        
+
+
     }
     
     @objc private func onBackTap(sender: UIButton!){

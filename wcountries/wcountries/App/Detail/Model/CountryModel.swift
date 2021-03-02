@@ -10,29 +10,35 @@ import Foundation
 // MARK: - Country
 struct CountryModel: Decodable {
     let name: String
-    let topLevelDomain: [String]?
+    var topLevelDomain: [String]? = nil
     let alpha2Code: String
     let alpha3Code: String
-    let callingCodes: [String]?
-    let capital: String?
-    let altSpellings: [String]?
-    let region: RegionType?
-    let subregion: String?
-    let population: Int?
-    let latlng: [Float]?
-    let demonym: String?
-    let area: Float?
-    let gini: Float?
-    let timezones: [String]?
-    let borders: [String]?
-    let nativeName: String?
-    let numericCode: String?
-    let currencies: [CurrencyModel]?
-    let languages: [LanguageModel]?
-    let translations: TranslationsModel?
-    let flag: URL?
-    let regionalBlocs: [RegionalBlocModel]?
-    let cioc: String?
+    var callingCodes: [String]? = nil
+    var capital: String? = nil
+    var altSpellings: [String]? = nil
+    var region: RegionType? = nil
+    var subregion: String? = nil
+    var population: Int? = nil
+    var latlng: [Float]? = nil
+    var demonym: String? = nil
+    var area: Double? = nil
+    var gini: Float? = nil
+    var timezones: [String]? = nil
+    var borders: [String]? = nil
+    var nativeName: String? = nil
+    var numericCode: String? = nil
+    var currencies: [CurrencyModel]? = nil
+    var languages: [LanguageModel]? = nil
+    var translations: TranslationsModel? = nil
+    var flag: URL? = nil
+    var regionalBlocs: [RegionalBlocModel]? = nil
+    var cioc: String? = nil
+    
+    init(name: String, alpha2Code: String, alpha3Code: String) {
+        self.name = name
+        self.alpha2Code = alpha2Code
+        self.alpha3Code = alpha3Code
+    }
 }
 
 // MARK: - Currency

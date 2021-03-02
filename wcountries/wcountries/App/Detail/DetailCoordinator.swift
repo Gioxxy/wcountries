@@ -14,9 +14,10 @@ class DetailCoordinator {
         self.navigationController = navigationController
     }
     
-    func start(model: CountryModel){
+    func start(model: MainCountryModel){
         let viewController = DetailViewController()
-        viewController.config(viewModel: DetailViewModel(self, model: model))
+        let countryModel = CountryModel(name: model.name, alpha2Code: model.alpha2Code, alpha3Code: model.alpha3Code)
+        viewController.config(viewModel: DetailViewModel(self, manager: DetailManager(), model: countryModel))
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }

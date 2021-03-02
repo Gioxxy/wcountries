@@ -8,14 +8,14 @@
 import Foundation
 
 protocol MainViewModelDelegate: class {
-    func didTapOnCountry(model: CountryModel)
+    func startDetail(model: MainCountryModel)
 }
 
 class MainViewModel {
     private weak var delegate: MainViewModelDelegate?
     private var manager: MainManager
-
-    private var model: [CountryModel]
+    private var model: [MainCountryModel]
+    
     var regions: [RegionViewModel]
     var countries: [CountryViewModel]
     
@@ -58,7 +58,7 @@ class MainViewModel {
         }
     }
     
-    init(_ delegate: MainViewModelDelegate, manager: MainManager, model: [CountryModel]) {
+    init(_ delegate: MainViewModelDelegate, manager: MainManager, model: [MainCountryModel]) {
         self.delegate = delegate
         self.manager = manager
         self.model = model
@@ -87,7 +87,7 @@ class MainViewModel {
     
     func didTapOnCountry(viewModel: CountryViewModel){
         if let model = model.first(where: { $0.alpha2Code == viewModel.alpha2Code}) {
-            delegate?.didTapOnCountry(model: model)
+            delegate?.startDetail(model: model)
         }
     }
 

@@ -8,12 +8,13 @@
 import Foundation
 
 class MainManager {
-    func getCountries(onSuccess: ((_ mainModel: [CountryModel])->Void)? = nil, onError: ((String)->Void)? = nil){
+    func getCountries(onSuccess: ((_ mainModel: [MainCountryModel])->Void)? = nil, onError: ((String)->Void)? = nil){
         CountriesAPI.get(
             route: "/all",
+            params: ["fields": "name;alpha2Code;alpha3Code"],
             onSuccess: { data in
                 do {
-                    let countryModel = try JSONDecoder.init().decode([CountryModel].self, from: data)
+                    let countryModel = try JSONDecoder.init().decode([MainCountryModel].self, from: data)
                     onSuccess?(countryModel)
                 } catch {
                     onError?("Decode error")
