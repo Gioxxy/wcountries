@@ -70,16 +70,6 @@ struct RegionalBlocModel: Decodable {
     let otherNames: [String]?
 }
 
-enum RegionType: String, Decodable {
-    case Africa
-    case Americas
-    case Asia
-    case Europe
-    case Oceania
-    case Polar
-    case Unknow = ""
-}
-
 // MARK: - Translations
 struct TranslationsModel: Decodable {
     let de: String?
@@ -89,4 +79,14 @@ struct TranslationsModel: Decodable {
     let it: String?
     let br: String?
     let pt: String?
+}
+
+enum RegionType: String, Decodable {
+    case Africa
+    case Americas
+    case Asia
+    case Europe
+    case Oceania
+    case Polar
+    case Unknow = ""
 }

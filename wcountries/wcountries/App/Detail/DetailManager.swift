@@ -24,4 +24,25 @@ class DetailManager {
             }
         )
     }
+    
+    func getAlpha2Codes(alpha3Codes: [String], onSuccess: ((_ mainModel: [String])->Void)? = nil, onError: ((String)->Void)? = nil){
+        CountriesAPI.get(
+            route: "/alpha",
+            params: [
+                "codes": alpha3Codes.joined(separator: ";"),
+                "fields": "alpha2Code"
+            ],
+            onSuccess: { data in
+                do {
+                    let alpha2Codes = try JSONDecoder.init().decode([Dictionary<String, String>].self, from: data).compactMap({ $0["alpha2Code"] })
+                    onSuccess?(alpha2Codes)
+                } catch {
+                    onError?("Decode error")
+                }
+            },
+            onError: { error in
+                onError?(error)
+            }
+        )
+    }
 }

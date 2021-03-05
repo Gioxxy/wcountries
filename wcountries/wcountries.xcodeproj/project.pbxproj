@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F92302125F1368E005D1555 /* NeighboringCountriesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92302025F1368E005D1555 /* NeighboringCountriesRow.swift */; };
+		9F92304825F220EC005D1555 /* NeighboringCountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92304725F220EC005D1555 /* NeighboringCountryView.swift */; };
 		9FACD26425EEF7F7000201FC /* MainCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26325EEF7F7000201FC /* MainCountryModel.swift */; };
 		9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26C25EEFEDD000201FC /* DetailManager.swift */; };
 		9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F92302025F1368E005D1555 /* NeighboringCountriesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeighboringCountriesRow.swift; sourceTree = "<group>"; };
+		9F92304725F220EC005D1555 /* NeighboringCountryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeighboringCountryView.swift; sourceTree = "<group>"; };
 		9FACD26325EEF7F7000201FC /* MainCountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCountryModel.swift; sourceTree = "<group>"; };
 		9FACD26C25EEFEDD000201FC /* DetailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailManager.swift; sourceTree = "<group>"; };
 		9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleVeiw.swift; sourceTree = "<group>"; };
@@ -106,6 +110,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F92303525F1397F005D1555 /* NeighboringCountries */ = {
+			isa = PBXGroup;
+			children = (
+				9F92302025F1368E005D1555 /* NeighboringCountriesRow.swift */,
+				9F92304725F220EC005D1555 /* NeighboringCountryView.swift */,
+			);
+			path = NeighboringCountries;
+			sourceTree = "<group>";
+		};
 		9FACD26825EEFDF4000201FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +262,7 @@
 				F7B8CD5B25EBF23B00A79AFC /* DetailViewController.swift */,
 				9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */,
 				9FAF3C8A25EE97CC0059E08A /* DetailRow.swift */,
+				9F92303525F1397F005D1555 /* NeighboringCountries */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -394,12 +408,14 @@
 				F7B8CD1525E9745A00A79AFC /* CountriesAPI.swift in Sources */,
 				9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */,
 				F7B8CD3025EA479D00A79AFC /* MainGridViewCell.swift in Sources */,
+				9F92302125F1368E005D1555 /* NeighboringCountriesRow.swift in Sources */,
 				9FAF3C8B25EE97CC0059E08A /* DetailRow.swift in Sources */,
 				F7B8CD5325EBF19500A79AFC /* DetailCoordinator.swift in Sources */,
 				F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */,
 				F790E0D425E97011003757F9 /* SwipeBackNavigationController.swift in Sources */,
 				F7B8CD2B25E98EE600A79AFC /* MainGridView.swift in Sources */,
 				F7B8CD3525EA47CE00A79AFC /* CountryModel.swift in Sources */,
+				9F92304825F220EC005D1555 /* NeighboringCountryView.swift in Sources */,
 				F790E0E125E9706A003757F9 /* MainCoordinator.swift in Sources */,
 				F7B8CD1F25E9763200A79AFC /* AppColors.swift in Sources */,
 				F790E09B25E96EB0003757F9 /* MainViewController.swift in Sources */,

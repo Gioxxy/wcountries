@@ -25,7 +25,6 @@ class MainCoordinator {
 
 extension MainCoordinator: MainViewModelDelegate {
     func startDetail(model: MainCountryModel){
-        print("Detail starting")
         detailCoordinator = DetailCoordinator(navigationController: navigationController)
         detailCoordinator?.start(model: model)
     }

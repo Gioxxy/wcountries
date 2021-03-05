@@ -104,17 +104,17 @@ class DetailViewController: UIViewController {
     
     private func setupView(){
         view.backgroundColor = AppColors.background
-        titleLabel.text = viewModel?.name
+        titleLabel.text = viewModel?.country.name
         
         let strokeTextAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.strokeColor: AppColors.accent,
             NSAttributedString.Key.foregroundColor: UIColor.clear,
             NSAttributedString.Key.strokeWidth: 8
         ]
-        subTitleLabel.attributedText = NSMutableAttributedString(string: viewModel?.alpha3Code ?? "", attributes: strokeTextAttributes)
+        subTitleLabel.attributedText = NSMutableAttributedString(string: viewModel?.country.alpha3Code ?? "", attributes: strokeTextAttributes)
         
         imageView.imageFromNetwork(
-            url: viewModel?.imageURL,
+            url: viewModel?.country.imageURL,
             then: { [weak self] image in
                 // Set flag aspect ratio
                 if let imageViewShadowContainer = self?.imageViewShadowContainer {
@@ -211,25 +211,41 @@ class DetailViewController: UIViewController {
             imageViewShadowContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -100)
         ])
         
-        // Add horizontal stack container
-        let bubblesStack: UIStackView = UIStackView()
-        bubblesStack.spacing = 15
-        bubblesStack.axis = .horizontal
         
-        containerView.addSubview(bubblesStack)
-        bubblesStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            bubblesStack.topAnchor.constraint(equalTo: imageViewShadowContainer.bottomAnchor, constant: 38),
-            bubblesStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
-        ])
         
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.startAnimating()
+        spinner.color = AppColors.bubbles
         viewModel?.getCountry(
+            onStart: {
+                self.containerView.addSubview(spinner)
+                spinner.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    spinner.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
+                    spinner.topAnchor.constraint(equalTo: self.imageViewShadowContainer.bottomAnchor, constant: 50)
+                ])
+            },
+            onCompletion: {
+                spinner.removeFromSuperview()
+            },
             onSuccess: { [weak self] viewModel in
                 guard let `self` = self else { return }
                 
+                // Add horizontal stack container
+                let bubblesStack: UIStackView = UIStackView()
+                bubblesStack.spacing = 15
+                bubblesStack.axis = .horizontal
+                
+                self.containerView.addSubview(bubblesStack)
+                bubblesStack.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    bubblesStack.topAnchor.constraint(equalTo: self.imageViewShadowContainer.bottomAnchor, constant: 38),
+                    bubblesStack.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor)
+                ])
+                
                 self.regionImageView.imageFromNetwork(url: URL(string: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/320px-Flag_of_Europe.svg.png")!) //TODO Add images and use the local one
-                self.currencySimbolLabel.text = viewModel.currencySimbol
-                self.callingCodeLabel.text = viewModel.callingCode
+                self.currencySimbolLabel.text = viewModel.country.currencySimbol
+                self.callingCodeLabel.text = viewModel.country.callingCode
                 
                 // Add region image
                 let regionImageViewShadowContainer = BubbleView()
@@ -242,7 +258,7 @@ class DetailViewController: UIViewController {
                 ])
                 
                 // Add currency simbol
-                if viewModel.currencySimbol != nil {
+                if viewModel.country.currencySimbol != nil {
                     let currencySimbolShadowContainer = BubbleView()
                     currencySimbolShadowContainer.config(contentView: self.currencySimbolLabel)
                     bubblesStack.addArrangedSubview(currencySimbolShadowContainer)
@@ -254,7 +270,7 @@ class DetailViewController: UIViewController {
                 }
                 
                 // Add calling code
-                if viewModel.callingCode != nil {
+                if viewModel.country.callingCode != nil {
                     let callingCodeShadowContainer = BubbleView()
                     callingCodeShadowContainer.config(contentView: self.callingCodeLabel)
                     bubblesStack.addArrangedSubview(callingCodeShadowContainer)
@@ -275,15 +291,33 @@ class DetailViewController: UIViewController {
                 NSLayoutConstraint.activate([
                     detailsStack.topAnchor.constraint(equalTo: bubblesStack.bottomAnchor, constant: 38),
                     detailsStack.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 18),
-                    detailsStack.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -18),
-                    detailsStack.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: -18)
+                    detailsStack.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -18)
                 ])
                 
-                // Add native name
-                for detail in viewModel.details {
+                for detail in viewModel.country.details {
                     let nativeNameDetailRow = DetailRow()
                     nativeNameDetailRow.config(viewModel: detail)
                     detailsStack.addArrangedSubview(nativeNameDetailRow)
+                }
+                
+                // Add neighboring countries
+                if let viewModel = viewModel.neighboringCountries {
+                    let neighboringCountriesRow = NeighboringCountriesRow()
+                    neighboringCountriesRow.config(viewModel: viewModel)
+                    self.containerView.addSubview(neighboringCountriesRow)
+                    neighboringCountriesRow.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        neighboringCountriesRow.topAnchor.constraint(equalTo: detailsStack.bottomAnchor, constant: 20),
+                        neighboringCountriesRow.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+                        neighboringCountriesRow.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor)
+                    ])
+                }
+                
+                
+                if let lastView = self.containerView.subviews.last {
+                    NSLayoutConstraint.activate([
+                        self.containerView.bottomAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 18)
+                    ])
                 }
             },
             onError: { error in
