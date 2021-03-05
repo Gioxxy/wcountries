@@ -44,25 +44,25 @@ class DetailViewModel {
                 self.currencySimbol = nil
             }
             
-            if let callingCode = model.callingCodes?.first {
+            if let callingCode = model.callingCodes?.first, callingCode != "" {
                 self.callingCode = "+"+callingCode
             } else {
                 callingCode = nil
             }
             
-            if let nativeName = model.nativeName {
+            if let nativeName = model.nativeName, nativeName != "" {
                 details.append(DetailRowViewModel(title: "Native name", detail: nativeName))
             }
-            if let capital = model.capital {
+            if let capital = model.capital, capital != "" {
                 details.append(DetailRowViewModel(title: "Capital", detail: capital))
             }
-            if let population = model.population {
+            if let population = model.population, population != 0 {
                 details.append(DetailRowViewModel(title: "Population", detail: String(format: "%ld", locale: Locale.current, population)))
             }
             if let latlon = model.latlng, latlon.count > 0 {
                 details.append(DetailRowViewModel(title: "Latitude longitude", detail: latlon[0].description + ", " + latlon[1].description))
             }
-            if let area = model.area {
+            if let area = model.area, area != 0 {
                 details.append(DetailRowViewModel(title: "Area", detail: String(format: "%.2f %@", locale: Locale.current, area, "Km²")))
             }
             if let languages = model.languages, languages.count > 0 {

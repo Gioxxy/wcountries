@@ -21,15 +21,15 @@ class NeighboringCountryView: UIView {
     func config(viewModel: DetailViewModel.NeighboringCountry){
         self.viewModel = viewModel
         imageView.imageFromNetwork(
-            url: viewModel.imageURL
-//            then: { [weak self] image in
+            url: viewModel.imageURL,
+            then: { [weak self] image in
                 // Set aspect ratio
-//                if let contentView = self?.contentView {
-//                    let aspectRatio = image.size.width / image.size.height
-//                    contentView.translatesAutoresizingMaskIntoConstraints = false
-//                    contentView.widthAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: aspectRatio).isActive = true
-//                }
-//            }
+                if let contentView = self {
+                    let aspectRatio = image.size.width / image.size.height
+                    contentView.translatesAutoresizingMaskIntoConstraints = false
+                    contentView.widthAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: aspectRatio).isActive = true
+                }
+            }
         )
         
         setupView()

@@ -54,11 +54,11 @@ class NeighboringCountriesRow: UIView {
         self.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
+            scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.heightAnchor.constraint(equalToConstant: 60)
+            scrollView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         scrollView.addSubview(neighboringCountriesStack)
@@ -68,7 +68,7 @@ class NeighboringCountriesRow: UIView {
             neighboringCountriesStack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             neighboringCountriesStack.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             neighboringCountriesStack.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            neighboringCountriesStack.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor, constant: -3),
+            neighboringCountriesStack.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor, constant: -6),
         ])
         
         for nc in viewModel?.neighboringCountries ?? [] {
