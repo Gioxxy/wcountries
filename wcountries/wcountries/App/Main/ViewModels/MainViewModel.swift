@@ -19,45 +19,6 @@ class MainViewModel {
     var regions: [RegionViewModel]
     var countries: [CountryViewModel]
     
-    class RegionViewModel {
-        let type: RegionType
-        let imageName: String?
-        var isSelected: Bool
-        
-        init(_ type: RegionType, isSelected: Bool = false) {
-            self.type = type
-            self.isSelected = isSelected
-            switch type {
-            case .Africa:
-                self.imageName = "africa"
-            case .Americas:
-                self.imageName = "americas"
-            case .Asia:
-                self.imageName = "asia"
-            case .Europe:
-                self.imageName = "europe"
-            case .Oceania:
-                self.imageName = "oceania"
-            case .Polar:
-                self.imageName = nil
-            case .Unknow:
-                self.imageName = nil
-            }
-        }
-    }
-    
-    class CountryViewModel {
-        let name: String
-        let alpha2Code: String
-        let imageURL: URL?
-        
-        init(name: String, alpha2Code: String) {
-            self.name = name.uppercased()
-            self.alpha2Code = alpha2Code
-            self.imageURL = URL(string: "https://flagcdn.com/h60/\(alpha2Code.lowercased()).png")
-        }
-    }
-    
     init(_ delegate: MainViewModelDelegate, manager: MainManager, model: [MainCountryModel]) {
         self.delegate = delegate
         self.manager = manager
@@ -104,4 +65,45 @@ class MainViewModel {
         }
     }
 
+}
+
+extension MainViewModel {
+    class RegionViewModel {
+        let type: RegionType
+        let imageName: String?
+        var isSelected: Bool
+        
+        init(_ type: RegionType, isSelected: Bool = false) {
+            self.type = type
+            self.isSelected = isSelected
+            switch type {
+            case .Africa:
+                self.imageName = "africa"
+            case .Americas:
+                self.imageName = "americas"
+            case .Asia:
+                self.imageName = "asia"
+            case .Europe:
+                self.imageName = "europe"
+            case .Oceania:
+                self.imageName = "oceania"
+            case .Polar:
+                self.imageName = nil
+            case .Unknow:
+                self.imageName = nil
+            }
+        }
+    }
+    
+    class CountryViewModel {
+        let name: String
+        let alpha2Code: String
+        let imageURL: URL?
+        
+        init(name: String, alpha2Code: String) {
+            self.name = name.uppercased()
+            self.alpha2Code = alpha2Code
+            self.imageURL = URL(string: "https://flagcdn.com/h60/\(alpha2Code.lowercased()).png")
+        }
+    }
 }

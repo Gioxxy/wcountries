@@ -18,6 +18,56 @@ class DetailViewModel {
     var country: CountryViewModel
     var neighboringCountries: NeighboringCountriesRow?
     
+    init(_ delegate: DetailViewModelDelegate, manager: DetailManager, model: CountryModel) {
+        self.delegate = delegate
+        self.manager = manager
+        self.model = model
+        self.country = CountryViewModel(model: model)
+        self.neighboringCountries = nil
+    }
+    
+    func getCountry(onStart: (()->Void)? = nil, onCompletion: (()->Void)? = nil, onSuccess: ((DetailViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+        onStart?()
+        manager.getCountry(
+            alpha3Code: model.alpha3Code,
+            onSuccess: { [weak self] model in
+                guard let `self` = self else { return }
+                self.model = model
+                self.country = CountryViewModel(model: model)
+                if let borders = model.borders, borders.count > 0 {
+                    self.manager.getAlpha2Codes(
+                        alpha3Codes: borders,
+                        onSuccess: {  [weak self] bordersAlpha2Codes in
+                            guard let `self` = self else { return }
+                            if bordersAlpha2Codes.count > 0 {
+                                self.neighboringCountries = NeighboringCountriesRow(alpha2Codes: bordersAlpha2Codes)
+                            }
+                            onCompletion?()
+                            onSuccess?(self)
+                        },
+                        onError: { error in
+                            onCompletion?()
+                            onError?(error)
+                        }
+                    )
+                } else {
+                    onCompletion?()
+                    onSuccess?(self)
+                }
+            },
+            onError: { error in
+                onCompletion?()
+                onError?(error)
+            }
+        )
+    }
+    
+    func onBackDidTap() {
+        delegate?.onBackDidTap()
+    }
+}
+
+extension DetailViewModel {
     class CountryViewModel {
         var name: String
         var alpha3Code: String
@@ -129,55 +179,5 @@ class DetailViewModel {
             self.alpha2Code = alpha2Code
             self.imageURL = URL(string: "https://flagcdn.com/h60/\(alpha2Code.lowercased()).png")
         }
-    }
-    
-    init(_ delegate: DetailViewModelDelegate, manager: DetailManager, model: CountryModel) {
-        self.delegate = delegate
-        self.manager = manager
-        self.model = model
-        self.country = CountryViewModel(model: model)
-        self.neighboringCountries = nil
-        
-        
-    }
-    
-    func getCountry(onStart: (()->Void)? = nil, onCompletion: (()->Void)? = nil, onSuccess: ((DetailViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
-        onStart?()
-        manager.getCountry(
-            alpha3Code: model.alpha3Code,
-            onSuccess: { [weak self] model in
-                guard let `self` = self else { return }
-                self.model = model
-                self.country = CountryViewModel(model: model)
-                if let borders = model.borders, borders.count > 0 {
-                    self.manager.getAlpha2Codes(
-                        alpha3Codes: borders,
-                        onSuccess: {  [weak self] bordersAlpha2Codes in
-                            guard let `self` = self else { return }
-                            if bordersAlpha2Codes.count > 0 {
-                                self.neighboringCountries = NeighboringCountriesRow(alpha2Codes: bordersAlpha2Codes)
-                            }
-                            onCompletion?()
-                            onSuccess?(self)
-                        },
-                        onError: { error in
-                            onCompletion?()
-                            onError?(error)
-                        }
-                    )
-                } else {
-                    onCompletion?()
-                    onSuccess?(self)
-                }
-            },
-            onError: { error in
-                onCompletion?()
-                onError?(error)
-            }
-        )
-    }
-    
-    func onBackDidTap() {
-        delegate?.onBackDidTap()
     }
 }
