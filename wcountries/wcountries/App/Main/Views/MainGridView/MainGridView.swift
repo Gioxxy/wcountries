@@ -15,7 +15,7 @@ protocol MainGridViewDelegate: class {
 final class MainGridView: UICollectionViewController {
     
     private var viewModel: [MainViewModel.CountryViewModel]?
-    weak var delegate: MainGridViewDelegate?
+    private weak var delegate: MainGridViewDelegate?
     
     init(){
         let inset = UIScreen.main.bounds.width.truncatingRemainder(dividingBy: 173) / 2
@@ -24,10 +24,11 @@ final class MainGridView: UICollectionViewController {
         flow.minimumInteritemSpacing = 20
         flow.minimumLineSpacing = 20
         flow.itemSize = CGSize(width: 163, height: 163)
-        flow.sectionInset = UIEdgeInsets(top: 160, left: inset, bottom: 30, right: inset)
+        flow.sectionInset = UIEdgeInsets(top: 180, left: inset, bottom: 30, right: inset)
         
         super.init(collectionViewLayout: flow)
         
+        self.collectionView = PassThroughCollectionView(frame: collectionView.frame, collectionViewLayout: flow)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.clear
@@ -40,9 +41,16 @@ final class MainGridView: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(_ delegate: MainGridViewDelegate, viewModel: [MainViewModel.CountryViewModel]) {
+    func config(_ delegate: MainGridViewDelegate, viewModel: [MainViewModel.CountryViewModel]){
         self.delegate = delegate
         self.viewModel = viewModel
+    }
+    
+    func update(viewModel: [MainViewModel.CountryViewModel]) {
+        self.viewModel = viewModel
+        collectionView.performBatchUpdates({
+            collectionView.reloadSections(IndexSet(0...0))
+        }, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -16,8 +16,8 @@ class MainCoordinator {
     }
     
     func start(){
-        let vc = MainViewController()
         let model: [MainCountryModel] = []
+        let vc = MainViewController()
         vc.config(viewModel: MainViewModel(self, manager: MainManager(), model: model))
         self.navigationController.pushViewController(vc, animated: true)
     }

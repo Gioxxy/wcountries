@@ -140,16 +140,34 @@ class DetailViewController: UIViewController {
             globe.centerXAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -(UIScreen.main.bounds.width/7))
         ])
         
+        // Add back button
+        view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+            backButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 18)
+        ])
+        
         // Add title
         view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
+        ])
         
         // Add subTitle
         view.addSubview(subTitleLabel)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor, constant: 5),
+            subTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
+            subTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
+        ])
         
         // Add scrollView
-        let scrollView = UIScrollView()
+        let scrollView = PassThroughScrollView()
         scrollView.contentInset = UIEdgeInsets(top: 300, left: 18, bottom: 18, right: 18)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -162,22 +180,6 @@ class DetailViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        // Add back button
-        view.addSubview(backButton)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            backButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 18),
-            
-            titleLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-            
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor, constant: 5),
-            subTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
-            subTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
         ])
         
         // Add container

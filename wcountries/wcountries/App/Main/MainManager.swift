@@ -25,4 +25,22 @@ class MainManager {
             }
         )
     }
+    
+    func getContinentCountries(continent: MainViewModel.RegionViewModel, onSuccess: ((_ mainModel: [MainCountryModel])->Void)? = nil, onError: ((String)->Void)? = nil){
+        CountriesAPI.get(
+            route: "/region/"+continent.type.rawValue.lowercased(),
+            params: ["fields": "name;alpha2Code;alpha3Code"],
+            onSuccess: { data in
+                do {
+                    let countryModel = try JSONDecoder.init().decode([MainCountryModel].self, from: data)
+                    onSuccess?(countryModel)
+                } catch {
+                    onError?("Decode error")
+                }
+            },
+            onError: { error in
+                onError?(error)
+            }
+        )
+    }
 }

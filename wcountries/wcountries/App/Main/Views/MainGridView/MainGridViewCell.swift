@@ -51,13 +51,12 @@ final class MainGridViewCell: UICollectionViewCell {
     private func setupView(){
         contentView.backgroundColor = AppColors.primary
         contentView.layer.cornerRadius = 10
-        contentView.layer.masksToBounds = true
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        layer.shadowRadius = 3
-        layer.shadowOpacity = 0.2
-        layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        contentView.layer.shadowRadius = 3
+        contentView.layer.shadowOpacity = 0.2
+        contentView.layer.masksToBounds = false
+        contentView.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
     
     private func addViews(){

@@ -16,11 +16,14 @@ class MainViewController: UIViewController {
         logo.contentMode = .scaleAspectFit
         return logo
     }()
-    
+    private let continetFilter = ContinentFilterView()
     private var mainGridView: MainGridView = MainGridView()
-
+    
     func config(viewModel: MainViewModel){
         self.viewModel = viewModel
+        
+        mainGridView.config(self, viewModel: viewModel.countries)
+        continetFilter.config(self, viewModel: viewModel.regions)
         
         setupView()
         addViews()
@@ -54,6 +57,15 @@ class MainViewController: UIViewController {
             logo.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
         
+        view.addSubview(continetFilter)
+        continetFilter.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            continetFilter.topAnchor.constraint(equalTo: logo.bottomAnchor),
+            continetFilter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            continetFilter.heightAnchor.constraint(equalToConstant: 60),
+            continetFilter.widthAnchor.constraint(equalToConstant: 300)
+        ])
+        
         // GridView
         view.addSubview(mainGridView.collectionView)
         mainGridView.collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,8 +85,7 @@ class MainViewController: UIViewController {
     private func fetchData(){
         viewModel?.getCountries(
             onSuccess: { viewModel in
-                self.mainGridView.config(self, viewModel: viewModel.countries)
-                self.mainGridView.collectionView.reloadData()
+                self.mainGridView.update(viewModel: viewModel.countries)
             },
             onError: { error in
                 // TODO: show error
@@ -89,10 +100,12 @@ extension MainViewController: MainGridViewDelegate {
         if scrollView.contentOffset.y < 5 {
             UIView.animate(withDuration: 0.5) {
                 self.logo.alpha = 1
+                self.continetFilter.alpha = 1
             }
         } else if self.logo.alpha == 1 {
             UIView.animate(withDuration: 0.5) {
                 self.logo.alpha = 0
+                self.continetFilter.alpha = 0
             }
         }
     }
@@ -100,6 +113,23 @@ extension MainViewController: MainGridViewDelegate {
     func onItemTap(_ gridView: MainGridView, viewModel: MainViewModel.CountryViewModel) {
         self.viewModel?.didTapOnCountry(viewModel: viewModel)
     }
+}
+
+extension MainViewController: ContinentFilterViewDelegate {
+    func didSelectContinent(continent: MainViewModel.RegionViewModel) {
+        viewModel?.getContinentCountries(
+            continent: continent,
+            onSuccess: { viewModel in
+                self.mainGridView.update(viewModel: viewModel.countries)
+            },
+            onError: { error in
+                // TODO: show error
+                print(error)
+            }
+        )
+    }
     
-    
+    func didDeselectContinent(continent: MainViewModel.RegionViewModel){
+        fetchData()
+    }
 }

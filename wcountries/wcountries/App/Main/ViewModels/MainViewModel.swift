@@ -39,7 +39,7 @@ class MainViewModel {
             case .Oceania:
                 self.imageName = "oceania"
             case .Polar:
-                self.imageName = "polar"
+                self.imageName = nil
             case .Unknow:
                 self.imageName = nil
             }
@@ -75,6 +75,19 @@ class MainViewModel {
     
     func getCountries(onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
         manager.getCountries(
+            onSuccess: { [weak self] model in
+                guard let `self` = self else { return }
+                self.model = model
+                self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                onSuccess?(self)
+            },
+            onError: onError
+        )
+    }
+    
+    func getContinentCountries(continent: MainViewModel.RegionViewModel, onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+        manager.getContinentCountries(
+            continent: continent,
             onSuccess: { [weak self] model in
                 guard let `self` = self else { return }
                 self.model = model
