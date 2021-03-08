@@ -16,6 +16,7 @@ class MainViewModel {
     var countries: [CountryViewModel]
     
     var selectedIso639_2: String? = nil
+    var selectedContinent: MainViewModel.RegionViewModel? = nil
     
     var updateGridView: (()->Void)? = nil
     
@@ -35,14 +36,20 @@ class MainViewModel {
         
         self.coordinator?.filterByLanguage = { [weak self] iso639_2 in
             guard let `self` = self else { return }
-            
             self.selectedIso639_2 = iso639_2
             self.manager.getCountriesBy(
                 iso639_2: iso639_2,
                 onSuccess: { [weak self] model in
                     guard let `self` = self else { return }
                     self.model = model
-                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    if self.selectedContinent != nil {
+                        let continentCountries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.countries = self.countries.filter({ country in
+                            continentCountries.contains(where: { $0.name == country.name })
+                        })
+                    } else {
+                        self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    }
                     self.updateGridView?()
                 },
                 onError: { error in
@@ -54,19 +61,33 @@ class MainViewModel {
         
         self.coordinator?.cleanLanguageFilter = { [weak self] in
             guard let `self` = self else { return }
-            
             self.selectedIso639_2 = nil
-            manager.getCountries(
-                onSuccess: { [weak self] model in
-                    guard let `self` = self else { return }
-                    self.model = model
-                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                    self.updateGridView?()
-                },
-                onError: { error in
-                    // TODO: Show error
-                }
-            )
+            if let selectedContinent = self.selectedContinent {
+                manager.getCountriesBy(
+                    continent: selectedContinent,
+                    onSuccess: { [weak self] model in
+                        guard let `self` = self else { return }
+                        self.model = model
+                        self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.updateGridView?()
+                    },
+                    onError: { error in
+                        // TODO: Show error
+                    }
+                )
+            } else {
+                manager.getCountries(
+                    onSuccess: { [weak self] model in
+                        guard let `self` = self else { return }
+                        self.model = model
+                        self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.updateGridView?()
+                    },
+                    onError: { error in
+                        // TODO: Show error
+                    }
+                )
+            }
         }
     }
     
@@ -83,12 +104,22 @@ class MainViewModel {
     }
     
     func didSelectContinent(continent: MainViewModel.RegionViewModel, onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+        selectedContinent = continent
         manager.getCountriesBy(
             continent: continent,
             onSuccess: { [weak self] model in
                 guard let `self` = self else { return }
                 self.model = model
-                self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                
+                if self.selectedIso639_2 != nil {
+                    let continentCountries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    self.countries = self.countries.filter({ country in
+                        continentCountries.contains(where: { $0.name == country.name })
+                    })
+                } else {
+                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                }
+                
                 onSuccess?(self)
             },
             onError: onError
@@ -96,15 +127,29 @@ class MainViewModel {
     }
     
     func didDeselectContinent(onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil) {
-        manager.getCountries(
-            onSuccess: { [weak self] model in
-                guard let `self` = self else { return }
-                self.model = model
-                self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                onSuccess?(self)
-            },
-            onError: onError
-        )
+        selectedContinent = nil
+        if let selectedIso639_2 = self.selectedIso639_2 {
+            manager.getCountriesBy(
+                iso639_2: selectedIso639_2,
+                onSuccess: { [weak self] model in
+                    guard let `self` = self else { return }
+                    self.model = model
+                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    onSuccess?(self)
+                },
+                onError: onError
+            )
+        } else {
+            manager.getCountries(
+                onSuccess: { [weak self] model in
+                    guard let `self` = self else { return }
+                    self.model = model
+                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    onSuccess?(self)
+                },
+                onError: onError
+            )
+        }
     }
     
     func didTapOnCountry(viewModel: CountryViewModel){
