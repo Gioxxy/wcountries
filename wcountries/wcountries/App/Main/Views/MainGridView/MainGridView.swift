@@ -41,7 +41,7 @@ final class MainGridView: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(_ delegate: MainGridViewDelegate, viewModel: [MainViewModel.CountryViewModel]){
+    func config(_ delegate: MainGridViewDelegate? = nil, viewModel: [MainViewModel.CountryViewModel]){
         self.delegate = delegate
         self.viewModel = viewModel
     }

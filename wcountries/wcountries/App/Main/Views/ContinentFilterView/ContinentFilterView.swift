@@ -16,7 +16,7 @@ class ContinentFilterView: UIStackView {
     private var viewModel: [MainViewModel.RegionViewModel]?
     private weak var delegate: ContinentFilterViewDelegate?
     
-    func config(_ delegate: ContinentFilterViewDelegate?, viewModel: [MainViewModel.RegionViewModel]){
+    func config(_ delegate: ContinentFilterViewDelegate? = nil, viewModel: [MainViewModel.RegionViewModel]){
         self.viewModel = viewModel
         self.delegate = delegate
         

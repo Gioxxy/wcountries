@@ -16,14 +16,24 @@ class MainViewController: UIViewController {
         logo.contentMode = .scaleAspectFit
         return logo
     }()
+    private let filterButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "filter"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        return button
+    }()
     private let continetFilter = ContinentFilterView()
     private var mainGridView: MainGridView = MainGridView()
     
     func config(viewModel: MainViewModel){
         self.viewModel = viewModel
+        self.viewModel?.updateGridView = {
+            self.mainGridView.update(viewModel: viewModel.countries)
+        }
         
         mainGridView.config(self, viewModel: viewModel.countries)
         continetFilter.config(self, viewModel: viewModel.regions)
+        filterButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onFilterButtonTap)))
         
         setupView()
         addViews()
@@ -57,6 +67,17 @@ class MainViewController: UIViewController {
             logo.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
         
+        // Filters
+        view.addSubview(filterButton)
+        filterButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            filterButton.centerYAnchor.constraint(equalTo: logo.centerYAnchor),
+            filterButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -5),
+            filterButton.widthAnchor.constraint(equalToConstant: 44),
+            filterButton.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        
+        // Continent filter
         view.addSubview(continetFilter)
         continetFilter.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -93,6 +114,10 @@ class MainViewController: UIViewController {
             }
         )
     }
+    
+    @objc func onFilterButtonTap(){
+        viewModel?.didTapOnFilterButton()
+    }
 }
 
 extension MainViewController: MainGridViewDelegate {
@@ -100,11 +125,13 @@ extension MainViewController: MainGridViewDelegate {
         if scrollView.contentOffset.y < 5 {
             UIView.animate(withDuration: 0.5) {
                 self.logo.alpha = 1
+                self.filterButton.alpha = 1
                 self.continetFilter.alpha = 1
             }
         } else if self.logo.alpha == 1 {
             UIView.animate(withDuration: 0.5) {
                 self.logo.alpha = 0
+                self.filterButton.alpha = 0
                 self.continetFilter.alpha = 0
             }
         }
@@ -117,7 +144,7 @@ extension MainViewController: MainGridViewDelegate {
 
 extension MainViewController: ContinentFilterViewDelegate {
     func didSelectContinent(continent: MainViewModel.RegionViewModel) {
-        viewModel?.getContinentCountries(
+        viewModel?.didSelectContinent(
             continent: continent,
             onSuccess: { viewModel in
                 self.mainGridView.update(viewModel: viewModel.countries)
@@ -130,6 +157,14 @@ extension MainViewController: ContinentFilterViewDelegate {
     }
     
     func didDeselectContinent(continent: MainViewModel.RegionViewModel){
-        fetchData()
+        viewModel?.didDeselectContinent(
+            onSuccess: { viewModel in
+                self.mainGridView.update(viewModel: viewModel.countries)
+            },
+            onError: { error in
+                // TODO: show error
+                print(error)
+            }
+        )
     }
 }

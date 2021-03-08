@@ -50,16 +50,10 @@ struct CurrencyModel: Decodable {
 
 // MARK: - Language
 struct LanguageModel: Decodable {
-    let iso6391: String?
-    let iso6392: String?
-    let name: String?
+    let iso639_1: String?
+    let iso639_2: String?
+    let name: String
     let nativeName: String?
-
-    enum CodingKeys: String, CodingKey {
-        case iso6391 = "iso639_1"
-        case iso6392 = "iso639_2"
-        case name, nativeName
-    }
 }
 
 // MARK: - RegionalBloc

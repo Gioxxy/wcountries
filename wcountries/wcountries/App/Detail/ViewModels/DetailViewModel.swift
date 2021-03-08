@@ -18,7 +18,7 @@ class DetailViewModel {
     var country: CountryViewModel
     var neighboringCountries: NeighboringCountriesRow?
     
-    init(_ delegate: DetailViewModelDelegate, manager: DetailManager, model: CountryModel) {
+    init(_ delegate: DetailViewModelDelegate? = nil, manager: DetailManager, model: CountryModel) {
         self.delegate = delegate
         self.manager = manager
         self.model = model

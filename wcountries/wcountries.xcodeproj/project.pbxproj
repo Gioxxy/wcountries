@@ -13,6 +13,13 @@
 		9F92305C25F27105005D1555 /* ContinentFilterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F92305B25F27105005D1555 /* ContinentFilterViewCell.swift */; };
 		9F9A51C725F40BBB006C6099 /* PassThroughCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51C625F40BBB006C6099 /* PassThroughCollectionView.swift */; };
 		9F9A51CC25F40BED006C6099 /* PassThroughScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51CB25F40BED006C6099 /* PassThroughScrollView.swift */; };
+		9F9A51D225F4337E006C6099 /* LangFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51D125F4337E006C6099 /* LangFilterCoordinator.swift */; };
+		9F9A51D725F43392006C6099 /* LangFilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51D625F43392006C6099 /* LangFilterManager.swift */; };
+		9F9A51DC25F433A1006C6099 /* LangFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51DB25F433A1006C6099 /* LangFilterViewController.swift */; };
+		9F9A51E125F433AE006C6099 /* LangFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51E025F433AE006C6099 /* LangFilterModel.swift */; };
+		9F9A51E625F433B9006C6099 /* LangFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51E525F433B9006C6099 /* LangFilterViewModel.swift */; };
+		9F9A521D25F450A2006C6099 /* LangFilterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A521C25F450A2006C6099 /* LangFilterListView.swift */; };
+		9F9A522225F54828006C6099 /* LangFilterListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A522125F54828006C6099 /* LangFilterListViewCell.swift */; };
 		9FACD26425EEF7F7000201FC /* MainCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26325EEF7F7000201FC /* MainCountryModel.swift */; };
 		9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26C25EEFEDD000201FC /* DetailManager.swift */; };
 		9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */; };
@@ -62,6 +69,13 @@
 		9F92305B25F27105005D1555 /* ContinentFilterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinentFilterViewCell.swift; sourceTree = "<group>"; };
 		9F9A51C625F40BBB006C6099 /* PassThroughCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughCollectionView.swift; sourceTree = "<group>"; };
 		9F9A51CB25F40BED006C6099 /* PassThroughScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughScrollView.swift; sourceTree = "<group>"; };
+		9F9A51D125F4337E006C6099 /* LangFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterCoordinator.swift; sourceTree = "<group>"; };
+		9F9A51D625F43392006C6099 /* LangFilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterManager.swift; sourceTree = "<group>"; };
+		9F9A51DB25F433A1006C6099 /* LangFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterViewController.swift; sourceTree = "<group>"; };
+		9F9A51E025F433AE006C6099 /* LangFilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterModel.swift; sourceTree = "<group>"; };
+		9F9A51E525F433B9006C6099 /* LangFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterViewModel.swift; sourceTree = "<group>"; };
+		9F9A521C25F450A2006C6099 /* LangFilterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterListView.swift; sourceTree = "<group>"; };
+		9F9A522125F54828006C6099 /* LangFilterListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterListViewCell.swift; sourceTree = "<group>"; };
 		9FACD26325EEF7F7000201FC /* MainCountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCountryModel.swift; sourceTree = "<group>"; };
 		9FACD26C25EEFEDD000201FC /* DetailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailManager.swift; sourceTree = "<group>"; };
 		9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleVeiw.swift; sourceTree = "<group>"; };
@@ -154,6 +168,52 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		9F9A51D025F43359006C6099 /* LangFilter */ = {
+			isa = PBXGroup;
+			children = (
+				9F9A51D625F43392006C6099 /* LangFilterManager.swift */,
+				9F9A51D125F4337E006C6099 /* LangFilterCoordinator.swift */,
+				9F9A521325F45062006C6099 /* Model */,
+				9F9A520F25F45055006C6099 /* Views */,
+				9F9A521725F45069006C6099 /* ViewModel */,
+			);
+			path = LangFilter;
+			sourceTree = "<group>";
+		};
+		9F9A520F25F45055006C6099 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9F9A51DB25F433A1006C6099 /* LangFilterViewController.swift */,
+				9F9A521B25F45079006C6099 /* LangFilterListView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9F9A521325F45062006C6099 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9F9A51E025F433AE006C6099 /* LangFilterModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9F9A521725F45069006C6099 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9F9A51E525F433B9006C6099 /* LangFilterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9F9A521B25F45079006C6099 /* LangFilterListView */ = {
+			isa = PBXGroup;
+			children = (
+				9F9A521C25F450A2006C6099 /* LangFilterListView.swift */,
+				9F9A522125F54828006C6099 /* LangFilterListViewCell.swift */,
+			);
+			path = LangFilterListView;
+			sourceTree = "<group>";
+		};
 		9FACD26825EEFDF4000201FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +298,7 @@
 				F7733D1725E9740000D9B87C /* API */,
 				F790E0DF25E97058003757F9 /* Main */,
 				F7B8CD5125EBF17300A79AFC /* Detail */,
+				9F9A51D025F43359006C6099 /* LangFilter */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -443,23 +504,30 @@
 				F7B8CD3E25EAEF5400A79AFC /* MainManager.swift in Sources */,
 				9F9A51C725F40BBB006C6099 /* PassThroughCollectionView.swift in Sources */,
 				F7B8CD1525E9745A00A79AFC /* CountriesAPI.swift in Sources */,
+				9F9A51E125F433AE006C6099 /* LangFilterModel.swift in Sources */,
 				9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */,
 				9F92305325F26CDB005D1555 /* ContinentFilterView.swift in Sources */,
+				9F9A51E625F433B9006C6099 /* LangFilterViewModel.swift in Sources */,
 				F7B8CD3025EA479D00A79AFC /* MainGridViewCell.swift in Sources */,
 				9F92302125F1368E005D1555 /* NeighboringCountriesRow.swift in Sources */,
 				9FAF3C8B25EE97CC0059E08A /* DetailRow.swift in Sources */,
 				F7B8CD5325EBF19500A79AFC /* DetailCoordinator.swift in Sources */,
 				F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */,
+				9F9A521D25F450A2006C6099 /* LangFilterListView.swift in Sources */,
 				F790E0D425E97011003757F9 /* SwipeBackNavigationController.swift in Sources */,
 				F7B8CD2B25E98EE600A79AFC /* MainGridView.swift in Sources */,
 				9F9A51CC25F40BED006C6099 /* PassThroughScrollView.swift in Sources */,
 				F7B8CD3525EA47CE00A79AFC /* CountryModel.swift in Sources */,
+				9F9A51D225F4337E006C6099 /* LangFilterCoordinator.swift in Sources */,
+				9F9A51D725F43392006C6099 /* LangFilterManager.swift in Sources */,
 				9F92304825F220EC005D1555 /* NeighboringCountryView.swift in Sources */,
 				F790E0E125E9706A003757F9 /* MainCoordinator.swift in Sources */,
 				F7B8CD1F25E9763200A79AFC /* AppColors.swift in Sources */,
+				9F9A522225F54828006C6099 /* LangFilterListViewCell.swift in Sources */,
 				F790E09B25E96EB0003757F9 /* MainViewController.swift in Sources */,
 				F790E09725E96EB0003757F9 /* AppDelegate.swift in Sources */,
 				9F92305C25F27105005D1555 /* ContinentFilterViewCell.swift in Sources */,
+				9F9A51DC25F433A1006C6099 /* LangFilterViewController.swift in Sources */,
 				9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */,
 				F7B8CD4625EAF11C00A79AFC /* MainViewModel.swift in Sources */,
 				F7B8CD6525EBF33100A79AFC /* DetailViewModel.swift in Sources */,

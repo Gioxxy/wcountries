@@ -7,10 +7,16 @@
 
 import Foundation
 
+protocol DetailCoordinatorDelegate: class {
+    func onPop(_ coordinator: DetailCoordinator)
+}
+
 class DetailCoordinator {
+    private weak var delegate: DetailCoordinatorDelegate?
     private var navigationController: SwipeBackNavigationController
     
-    init(navigationController: SwipeBackNavigationController){
+    init(_ delegate: DetailCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController){
+        self.delegate = delegate
         self.navigationController = navigationController
     }
     
@@ -25,5 +31,6 @@ class DetailCoordinator {
 extension DetailCoordinator: DetailViewModelDelegate {
     func onBackDidTap() {
         navigationController.popViewController(animated: true)
+        delegate?.onPop(self)
     }
 }

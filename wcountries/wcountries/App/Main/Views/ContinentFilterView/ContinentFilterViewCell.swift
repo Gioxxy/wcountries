@@ -27,7 +27,7 @@ class ContinentFilterViewCell: UIView {
     private var heightConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
     
-    func config(_ delegate: ContinentFilterViewCellDelegate, viewModel: MainViewModel.RegionViewModel) {
+    func config(_ delegate: ContinentFilterViewCellDelegate? = nil, viewModel: MainViewModel.RegionViewModel) {
         self.delegate = delegate
         self.viewModel = viewModel
         if let imageName = viewModel.imageName {

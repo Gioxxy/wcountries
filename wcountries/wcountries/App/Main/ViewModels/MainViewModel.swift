@@ -7,20 +7,20 @@
 
 import Foundation
 
-protocol MainViewModelDelegate: class {
-    func startDetail(model: MainCountryModel)
-}
-
 class MainViewModel {
-    private weak var delegate: MainViewModelDelegate?
+    private weak var coordinator: MainCoordinator?
     private var manager: MainManager
     private var model: [MainCountryModel]
     
     var regions: [RegionViewModel]
     var countries: [CountryViewModel]
     
-    init(_ delegate: MainViewModelDelegate, manager: MainManager, model: [MainCountryModel]) {
-        self.delegate = delegate
+    var selectedIso639_2: String? = nil
+    
+    var updateGridView: (()->Void)? = nil
+    
+    init(_ coordinator: MainCoordinator? = nil, manager: MainManager, model: [MainCountryModel]) {
+        self.coordinator = coordinator
         self.manager = manager
         self.model = model
         self.regions = [
@@ -32,6 +32,42 @@ class MainViewModel {
         ]
         
         self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+        
+        self.coordinator?.filterByLanguage = { [weak self] iso639_2 in
+            guard let `self` = self else { return }
+            
+            self.selectedIso639_2 = iso639_2
+            self.manager.getCountriesBy(
+                iso639_2: iso639_2,
+                onSuccess: { [weak self] model in
+                    guard let `self` = self else { return }
+                    self.model = model
+                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    self.updateGridView?()
+                },
+                onError: { error in
+                    // TODO: Show error
+                }
+            )
+            self.updateGridView?()
+        }
+        
+        self.coordinator?.cleanLanguageFilter = { [weak self] in
+            guard let `self` = self else { return }
+            
+            self.selectedIso639_2 = nil
+            manager.getCountries(
+                onSuccess: { [weak self] model in
+                    guard let `self` = self else { return }
+                    self.model = model
+                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    self.updateGridView?()
+                },
+                onError: { error in
+                    // TODO: Show error
+                }
+            )
+        }
     }
     
     func getCountries(onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
@@ -46,9 +82,21 @@ class MainViewModel {
         )
     }
     
-    func getContinentCountries(continent: MainViewModel.RegionViewModel, onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
-        manager.getContinentCountries(
+    func didSelectContinent(continent: MainViewModel.RegionViewModel, onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+        manager.getCountriesBy(
             continent: continent,
+            onSuccess: { [weak self] model in
+                guard let `self` = self else { return }
+                self.model = model
+                self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                onSuccess?(self)
+            },
+            onError: onError
+        )
+    }
+    
+    func didDeselectContinent(onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil) {
+        manager.getCountries(
             onSuccess: { [weak self] model in
                 guard let `self` = self else { return }
                 self.model = model
@@ -61,10 +109,13 @@ class MainViewModel {
     
     func didTapOnCountry(viewModel: CountryViewModel){
         if let model = model.first(where: { $0.alpha2Code == viewModel.alpha2Code}) {
-            delegate?.startDetail(model: model)
+            coordinator?.startDetail(model: model)
         }
     }
-
+    
+    func didTapOnFilterButton(){
+        coordinator?.startFilter(selectedIso639_2: selectedIso639_2)
+    }
 }
 
 extension MainViewModel {
