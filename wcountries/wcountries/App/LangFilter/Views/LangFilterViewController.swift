@@ -26,13 +26,26 @@ class LangFilterViewController: UIViewController {
         return closeButton
     }()
     
+    private let searchBar = SearchBarView()
+    
     private let listView = LangFilterListView()
     
     func config(viewModel: LangFilterViewModel){
+        viewModel.updateListView = {
+            self.listView.update()
+        }
         self.viewModel = viewModel
-        listView.config(self, viewModel: viewModel)
         titleLabel.text = "Filtra per lingua"
         closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapClose)))
+        searchBar.config(
+            onSearch: { text in
+                self.viewModel?.onSearch(text: text)
+            },
+            onSearchEnd: {
+                self.viewModel?.onSearchEnd()
+            }
+        )
+        listView.config(self, viewModel: viewModel)
         
         setupView()
         addViews()
@@ -68,10 +81,18 @@ class LangFilterViewController: UIViewController {
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
         ])
         
+        view.addSubview(searchBar)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18)
+        ])
+        
         view.addSubview(listView.tableView)
         listView.tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            listView.tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            listView.tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 0),
             listView.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             listView.tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listView.tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
@@ -83,7 +104,7 @@ class LangFilterViewController: UIViewController {
             onStart: {},
             onCompletion: {},
             onSuccess: { [weak self] viewModel in
-                self?.listView.update(viewModel: viewModel.languages)
+                self?.listView.update()
             },
             onError: { error in
                 // TODO: Show error
@@ -100,6 +121,9 @@ class LangFilterViewController: UIViewController {
 extension LangFilterViewController: LangFilterListViewDelegate {
     func onItemSelected(_ listView: LangFilterListView, viewModel: LangFilterViewModel.LanguageViewModel) {
         self.viewModel?.onLanguageSelected(viewModel: viewModel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.dismiss(animated: true)
+        }
     }
     
     func onItemDeselected(_ listView: LangFilterListView, viewModel: LangFilterViewModel.LanguageViewModel) {

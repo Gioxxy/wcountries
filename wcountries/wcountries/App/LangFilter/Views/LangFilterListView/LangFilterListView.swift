@@ -27,11 +27,12 @@ class LangFilterListView: UITableViewController {
         tableView.showsVerticalScrollIndicator = true
         tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .onDrag
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         tableView.register(LangFilterListViewCell.self, forCellReuseIdentifier: LangFilterListViewCell.cellId)
     }
     
-    func update(viewModel: [LangFilterViewModel.LanguageViewModel]) {
-        self.viewModel?.languages = viewModel
+    func update() {
         tableView.performBatchUpdates({
             tableView.reloadSections(IndexSet(0...1), with: .fade)
         }, completion: nil)
@@ -78,7 +79,7 @@ class LangFilterListView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return section == 0 ? 40 : 0
+        return section == 0 && viewModel?.selectedLanguages.count ?? 0 > 0 ? 40 : 0
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

@@ -39,18 +39,29 @@ class MainViewModel {
             self.selectedIso639_2 = iso639_2
             self.manager.getCountriesBy(
                 iso639_2: iso639_2,
-                onSuccess: { [weak self] model in
+                onSuccess: { [weak self] modelByLanguage in
                     guard let `self` = self else { return }
-                    self.model = model
-                    if self.selectedContinent != nil {
-                        let continentCountries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                        self.countries = self.countries.filter({ country in
-                            continentCountries.contains(where: { $0.name == country.name })
-                        })
+                    
+                    if let selectedContinent = self.selectedContinent {
+                        self.manager.getCountriesBy(
+                            continent: selectedContinent,
+                            onSuccess: { [weak self] modelByContinent in
+                                guard let `self` = self else { return }
+                                self.model = modelByLanguage.filter({ country in
+                                    modelByContinent.contains(where: { $0.name == country.name })
+                                })
+                                self.countries = self.model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                                self.updateGridView?()
+                            },
+                            onError: { error in
+                                // TODO: Show error
+                            }
+                        )
                     } else {
-                        self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.model = modelByLanguage
+                        self.countries = modelByLanguage.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.updateGridView?()
                     }
-                    self.updateGridView?()
                 },
                 onError: { error in
                     // TODO: Show error
@@ -107,17 +118,27 @@ class MainViewModel {
         selectedContinent = continent
         manager.getCountriesBy(
             continent: continent,
-            onSuccess: { [weak self] model in
+            onSuccess: { [weak self] modelByContinent in
                 guard let `self` = self else { return }
-                self.model = model
                 
-                if self.selectedIso639_2 != nil {
-                    let continentCountries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                    self.countries = self.countries.filter({ country in
-                        continentCountries.contains(where: { $0.name == country.name })
-                    })
+                if let selectedIso639_2 = self.selectedIso639_2 {
+                    self.manager.getCountriesBy(
+                        iso639_2: selectedIso639_2,
+                        onSuccess: { [weak self] modelByLanguage in
+                            guard let `self` = self else { return }
+                            self.model = modelByContinent.filter({ country in
+                                modelByLanguage.contains(where: { $0.name == country.name })
+                            })
+                            self.countries = self.model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                            onSuccess?(self)
+                        },
+                        onError: { error in
+                            onError?(error)
+                        }
+                    )
                 } else {
-                    self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    self.model = modelByContinent
+                    self.countries = modelByContinent.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
                 }
                 
                 onSuccess?(self)

@@ -20,6 +20,7 @@
 		9F9A51E625F433B9006C6099 /* LangFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A51E525F433B9006C6099 /* LangFilterViewModel.swift */; };
 		9F9A521D25F450A2006C6099 /* LangFilterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A521C25F450A2006C6099 /* LangFilterListView.swift */; };
 		9F9A522225F54828006C6099 /* LangFilterListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A522125F54828006C6099 /* LangFilterListViewCell.swift */; };
+		9F9A523125F76BF8006C6099 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A523025F76BF8006C6099 /* SearchBarView.swift */; };
 		9FACD26425EEF7F7000201FC /* MainCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26325EEF7F7000201FC /* MainCountryModel.swift */; };
 		9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26C25EEFEDD000201FC /* DetailManager.swift */; };
 		9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */; };
@@ -76,6 +77,7 @@
 		9F9A51E525F433B9006C6099 /* LangFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterViewModel.swift; sourceTree = "<group>"; };
 		9F9A521C25F450A2006C6099 /* LangFilterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterListView.swift; sourceTree = "<group>"; };
 		9F9A522125F54828006C6099 /* LangFilterListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterListViewCell.swift; sourceTree = "<group>"; };
+		9F9A523025F76BF8006C6099 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		9FACD26325EEF7F7000201FC /* MainCountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCountryModel.swift; sourceTree = "<group>"; };
 		9FACD26C25EEFEDD000201FC /* DetailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailManager.swift; sourceTree = "<group>"; };
 		9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleVeiw.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				9F9A51DB25F433A1006C6099 /* LangFilterViewController.swift */,
 				9F9A521B25F45079006C6099 /* LangFilterListView */,
+				9F9A523025F76BF8006C6099 /* SearchBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */,
 				9F92305325F26CDB005D1555 /* ContinentFilterView.swift in Sources */,
 				9F9A51E625F433B9006C6099 /* LangFilterViewModel.swift in Sources */,
+				9F9A523125F76BF8006C6099 /* SearchBarView.swift in Sources */,
 				F7B8CD3025EA479D00A79AFC /* MainGridViewCell.swift in Sources */,
 				9F92302125F1368E005D1555 /* NeighboringCountriesRow.swift in Sources */,
 				9FAF3C8B25EE97CC0059E08A /* DetailRow.swift in Sources */,

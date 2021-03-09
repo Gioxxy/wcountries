@@ -20,14 +20,20 @@ class LangFilterViewModel {
     private var lastSelectedLanguageIso639_2: String?
     
     var languages = [LanguageViewModel]()
+    private var searchText: String? = nil
     
     var selectedLanguages: [LanguageViewModel] {
         return self.languages.filter({ $0.isSelected })
     }
     
     var unselectedLanguages: [LanguageViewModel] {
+        if let searchText = searchText {
+            return self.languages.filter({ !$0.isSelected && $0.name.lowercased().contains(searchText.lowercased()) })
+        }
         return self.languages.filter({ !$0.isSelected })
     }
+    
+    var updateListView: (()->Void)? = nil
     
     init(_ delegate: LangFilterViewModelDelegate? = nil, manager: LangFilterManager, selectedIso639_2: String? = nil) {
         self.delegate = delegate
@@ -56,15 +62,23 @@ class LangFilterViewModel {
         )
     }
     
+    func onSearch(text: String){
+        searchText = text
+        updateListView?()
+    }
+    
+    func onSearchEnd(){
+        searchText = nil
+        updateListView?()
+    }
+    
     func onLanguageSelected(viewModel: LangFilterViewModel.LanguageViewModel){
         self.languages.first(where: { $0.isSelected })?.isSelected = false
         viewModel.isSelected = true
-//        delegate?.onLanguageSelected(iso639_2: viewModel.iso639_2)
     }
     
     func onLanguageDeselected(viewModel: LangFilterViewModel.LanguageViewModel){
         viewModel.isSelected = false
-//        delegate?.onLanguageDeselected()
     }
     
     func onClose(){
