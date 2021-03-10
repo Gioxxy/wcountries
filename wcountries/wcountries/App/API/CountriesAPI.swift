@@ -44,8 +44,8 @@ final class CountriesAPI {
 //            onSuccess?(data)
 //        } else {
             let sessionConfiguration = URLSessionConfiguration.default
-            sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
-            sessionConfiguration.urlCache = cache
+//            sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
+//            sessionConfiguration.urlCache = cache
             URLSession(configuration: sessionConfiguration).dataTask(with: request, completionHandler: { data, response, error -> Void in
                 
                 if let error = error {
@@ -77,7 +77,7 @@ final class CountriesAPI {
                     return
                 }
                 
-                cache.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
+//                cache.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
                 DispatchQueue.main.async {
                     onSuccess?(data)
                 }

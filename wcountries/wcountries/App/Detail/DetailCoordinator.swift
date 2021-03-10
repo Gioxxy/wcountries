@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailCoordinatorDelegate: class {
-    func onPop(_ coordinator: DetailCoordinator)
+    func onClose(_ coordinator: DetailCoordinator)
 }
 
 class DetailCoordinator {
@@ -26,11 +26,18 @@ class DetailCoordinator {
         viewController.config(viewModel: DetailViewModel(self, manager: DetailManager(), model: countryModel))
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    deinit {
+        print(String(describing: self) + " deinit")
+    }
 }
 
 extension DetailCoordinator: DetailViewModelDelegate {
     func onBackDidTap() {
         navigationController.popViewController(animated: true)
-        delegate?.onPop(self)
+    }
+    
+    func onClose(){
+        delegate?.onClose(self)
     }
 }

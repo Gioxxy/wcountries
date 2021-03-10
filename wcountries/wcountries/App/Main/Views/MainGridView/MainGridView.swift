@@ -14,7 +14,7 @@ protocol MainGridViewDelegate: class {
 
 final class MainGridView: UICollectionViewController {
     
-    private var viewModel: [MainViewModel.CountryViewModel]?
+    private var viewModel: MainViewModel?
     private weak var delegate: MainGridViewDelegate?
     
     init(){
@@ -41,26 +41,25 @@ final class MainGridView: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(_ delegate: MainGridViewDelegate? = nil, viewModel: [MainViewModel.CountryViewModel]){
+    func config(_ delegate: MainGridViewDelegate? = nil, viewModel: MainViewModel){
         self.delegate = delegate
         self.viewModel = viewModel
     }
     
-    func update(viewModel: [MainViewModel.CountryViewModel]) {
-        self.viewModel = viewModel
+    func update() {
         collectionView.performBatchUpdates({
             collectionView.reloadSections(IndexSet(0...0))
         }, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.count ?? 0
+        viewModel?.countries.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let viewModel = viewModel {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainGridViewCell.cellId, for: indexPath) as! MainGridViewCell
-            cell.config(viewModel: viewModel[indexPath.row])
+            cell.config(viewModel: viewModel.countries[indexPath.row])
             return cell
         }
         return UICollectionViewCell()
@@ -68,7 +67,7 @@ final class MainGridView: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let viewModel = viewModel {
-            delegate?.onItemTap(self, viewModel: viewModel[indexPath.row])
+            delegate?.onItemTap(self, viewModel: viewModel.countries[indexPath.row])
         }
     }
     

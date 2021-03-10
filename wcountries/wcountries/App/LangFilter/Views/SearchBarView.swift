@@ -27,7 +27,6 @@ class SearchBarView: UISearchBar, UISearchBarDelegate {
         placeholder = "Search"
         searchBarStyle = .minimal
         tintColor = .black
-//        backgroundColor = #colorLiteral(red: 0.9175556302, green: 0.9110012054, blue: 0.9225750566, alpha: 1)
         backgroundColor = .white
         tintColor = .black
     }

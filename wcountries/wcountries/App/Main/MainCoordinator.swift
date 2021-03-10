@@ -39,13 +39,13 @@ class MainCoordinator {
 }
 
 extension MainCoordinator: DetailCoordinatorDelegate {
-    func onPop(_ coordinator: DetailCoordinator) {
+    func onClose(_ coordinator: DetailCoordinator) {
         detailCoordinator = nil
     }
 }
 
 extension MainCoordinator: LangFilterCoordinatorDelegate {
-    func onPop(_ coordinator: LangFilterCoordinatorDelegate) {
+    func onClose(_ coordinator: LangFilterCoordinator) {
         langFilterCoordinator = nil
     }
     

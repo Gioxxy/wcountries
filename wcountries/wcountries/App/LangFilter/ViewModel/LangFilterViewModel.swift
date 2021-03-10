@@ -8,6 +8,7 @@
 import Foundation
 
 protocol LangFilterViewModelDelegate: class {
+    func onClose()
     func onLanguageSelected(iso639_2: String)
     func onLanguageDeselected()
 }
@@ -34,6 +35,10 @@ class LangFilterViewModel {
     }
     
     var updateListView: (()->Void)? = nil
+    
+    deinit {
+        print(String(describing: self) + " deinit")
+    }
     
     init(_ delegate: LangFilterViewModelDelegate? = nil, manager: LangFilterManager, selectedIso639_2: String? = nil) {
         self.delegate = delegate
@@ -87,6 +92,7 @@ class LangFilterViewModel {
         } else {
             delegate?.onLanguageDeselected()
         }
+        delegate?.onClose()
     }
 }
 

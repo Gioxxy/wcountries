@@ -22,16 +22,42 @@ class MainViewController: UIViewController {
         button.contentMode = .scaleAspectFit
         return button
     }()
+    private let loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView(style: .large)
+        loader.startAnimating()
+        loader.color = AppColors.bubbles
+        return loader
+    }()
     private let continetFilter = ContinentFilterView()
-    private var mainGridView: MainGridView = MainGridView()
+    private let mainGridView: MainGridView = MainGridView()
     
     func config(viewModel: MainViewModel){
-        self.viewModel = viewModel
-        self.viewModel?.updateGridView = {
-            self.mainGridView.update(viewModel: viewModel.countries)
+        viewModel.updateGridView = {
+            self.mainGridView.update()
         }
+        viewModel.showError = { error in
+            let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
+        viewModel.showLoader = {
+            self.view.addSubview(self.loader)
+            self.loader.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                self.loader.centerXAnchor.constraint(equalTo: self.mainGridView.collectionView.centerXAnchor),
+                self.loader.centerYAnchor.constraint(equalTo: self.mainGridView.collectionView.centerYAnchor)
+            ])
+            self.loader.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.loader.isHidden = false
+            })
+        }
+        viewModel.dismissLoader = {
+            self.loader.removeFromSuperview()
+        }
+        self.viewModel = viewModel
         
-        mainGridView.config(self, viewModel: viewModel.countries)
+        mainGridView.config(self, viewModel: viewModel)
         continetFilter.config(self, viewModel: viewModel.regions)
         filterButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onFilterButtonTap)))
         
@@ -104,15 +130,7 @@ class MainViewController: UIViewController {
     }
     
     private func fetchData(){
-        viewModel?.getCountries(
-            onSuccess: { viewModel in
-                self.mainGridView.update(viewModel: viewModel.countries)
-            },
-            onError: { error in
-                // TODO: show error
-                print(error)
-            }
-        )
+        viewModel?.getCountries()
     }
     
     @objc func onFilterButtonTap(){
@@ -144,27 +162,10 @@ extension MainViewController: MainGridViewDelegate {
 
 extension MainViewController: ContinentFilterViewDelegate {
     func didSelectContinent(continent: MainViewModel.RegionViewModel) {
-        viewModel?.didSelectContinent(
-            continent: continent,
-            onSuccess: { viewModel in
-                self.mainGridView.update(viewModel: viewModel.countries)
-            },
-            onError: { error in
-                // TODO: show error
-                print(error)
-            }
-        )
+        viewModel?.didSelectContinent(continent: continent)
     }
     
     func didDeselectContinent(continent: MainViewModel.RegionViewModel){
-        viewModel?.didDeselectContinent(
-            onSuccess: { viewModel in
-                self.mainGridView.update(viewModel: viewModel.countries)
-            },
-            onError: { error in
-                // TODO: show error
-                print(error)
-            }
-        )
+        viewModel?.didDeselectContinent()
     }
 }

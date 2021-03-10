@@ -36,8 +36,8 @@ class BubbleView: UIView {
             NSLayoutConstraint.activate([
                 contentView.topAnchor.constraint(equalTo: topAnchor),
                 contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-                contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5)
+                contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                contentView.trailingAnchor.constraint(equalTo: trailingAnchor)
             ])
         }
     }

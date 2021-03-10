@@ -19,6 +19,13 @@ class MainViewModel {
     var selectedContinent: MainViewModel.RegionViewModel? = nil
     
     var updateGridView: (()->Void)? = nil
+    var showError: ((String)->Void)? = nil
+    var showLoader: (()->Void)? = nil
+    var dismissLoader: (()->Void)? = nil
+    
+    deinit {
+        print(String(describing: self) + " deinit")
+    }
     
     init(_ coordinator: MainCoordinator? = nil, manager: MainManager, model: [MainCountryModel]) {
         self.coordinator = coordinator
@@ -36,6 +43,7 @@ class MainViewModel {
         
         self.coordinator?.filterByLanguage = { [weak self] iso639_2 in
             guard let `self` = self else { return }
+            self.showLoader?()
             self.selectedIso639_2 = iso639_2
             self.manager.getCountriesBy(
                 iso639_2: iso639_2,
@@ -51,27 +59,31 @@ class MainViewModel {
                                     modelByContinent.contains(where: { $0.name == country.name })
                                 })
                                 self.countries = self.model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                                self.dismissLoader?()
                                 self.updateGridView?()
                             },
                             onError: { error in
-                                // TODO: Show error
+                                self.dismissLoader?()
+                                self.showError?(error)
                             }
                         )
                     } else {
                         self.model = modelByLanguage
                         self.countries = modelByLanguage.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.dismissLoader?()
                         self.updateGridView?()
                     }
                 },
                 onError: { error in
-                    // TODO: Show error
+                    self.dismissLoader?()
+                    self.showError?(error)
                 }
             )
-            self.updateGridView?()
         }
         
         self.coordinator?.cleanLanguageFilter = { [weak self] in
             guard let `self` = self else { return }
+            self.showLoader?()
             self.selectedIso639_2 = nil
             if let selectedContinent = self.selectedContinent {
                 manager.getCountriesBy(
@@ -80,10 +92,12 @@ class MainViewModel {
                         guard let `self` = self else { return }
                         self.model = model
                         self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.dismissLoader?()
                         self.updateGridView?()
                     },
                     onError: { error in
-                        // TODO: Show error
+                        self.dismissLoader?()
+                        self.showError?(error)
                     }
                 )
             } else {
@@ -92,35 +106,42 @@ class MainViewModel {
                         guard let `self` = self else { return }
                         self.model = model
                         self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                        self.dismissLoader?()
                         self.updateGridView?()
                     },
                     onError: { error in
-                        // TODO: Show error
+                        self.dismissLoader?()
+                        self.showError?(error)
                     }
                 )
             }
         }
     }
     
-    func getCountries(onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+    func getCountries(){
+        self.showLoader?()
         manager.getCountries(
             onSuccess: { [weak self] model in
                 guard let `self` = self else { return }
                 self.model = model
                 self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                onSuccess?(self)
+                self.dismissLoader?()
+                self.updateGridView?()
             },
-            onError: onError
+            onError: { error in
+                self.dismissLoader?()
+                self.showError?(error)
+            }
         )
     }
     
-    func didSelectContinent(continent: MainViewModel.RegionViewModel, onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+    func didSelectContinent(continent: MainViewModel.RegionViewModel){
+        self.showLoader?()
         selectedContinent = continent
         manager.getCountriesBy(
             continent: continent,
             onSuccess: { [weak self] modelByContinent in
                 guard let `self` = self else { return }
-                
                 if let selectedIso639_2 = self.selectedIso639_2 {
                     self.manager.getCountriesBy(
                         iso639_2: selectedIso639_2,
@@ -130,24 +151,30 @@ class MainViewModel {
                                 modelByLanguage.contains(where: { $0.name == country.name })
                             })
                             self.countries = self.model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                            onSuccess?(self)
+                            self.dismissLoader?()
+                            self.updateGridView?()
                         },
                         onError: { error in
-                            onError?(error)
+                            self.dismissLoader?()
+                            self.showError?(error)
                         }
                     )
                 } else {
                     self.model = modelByContinent
                     self.countries = modelByContinent.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
+                    self.dismissLoader?()
+                    self.updateGridView?()
                 }
-                
-                onSuccess?(self)
             },
-            onError: onError
+            onError: { error in
+                self.dismissLoader?()
+                self.showError?(error)
+            }
         )
     }
     
-    func didDeselectContinent(onSuccess: ((MainViewModel)->Void)? = nil, onError: ((String)->Void)? = nil) {
+    func didDeselectContinent() {
+        self.showLoader?()
         selectedContinent = nil
         if let selectedIso639_2 = self.selectedIso639_2 {
             manager.getCountriesBy(
@@ -156,9 +183,13 @@ class MainViewModel {
                     guard let `self` = self else { return }
                     self.model = model
                     self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                    onSuccess?(self)
+                    self.dismissLoader?()
+                    self.updateGridView?()
                 },
-                onError: onError
+                onError: { error in
+                    self.dismissLoader?()
+                    self.showError?(error)
+                }
             )
         } else {
             manager.getCountries(
@@ -166,9 +197,13 @@ class MainViewModel {
                     guard let `self` = self else { return }
                     self.model = model
                     self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-                    onSuccess?(self)
+                    self.dismissLoader?()
+                    self.updateGridView?()
                 },
-                onError: onError
+                onError: { error in
+                    self.dismissLoader?()
+                    self.showError?(error)
+                }
             )
         }
     }

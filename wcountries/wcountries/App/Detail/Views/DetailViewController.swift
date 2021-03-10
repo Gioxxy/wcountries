@@ -213,8 +213,6 @@ class DetailViewController: UIViewController {
             imageViewShadowContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -100)
         ])
         
-        
-        
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.startAnimating()
         spinner.color = AppColors.bubbles
@@ -245,19 +243,22 @@ class DetailViewController: UIViewController {
                     bubblesStack.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor)
                 ])
                 
-                self.regionImageView.imageFromNetwork(url: URL(string: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/320px-Flag_of_Europe.svg.png")!) //TODO Add images and use the local one
+                
                 self.currencySimbolLabel.text = viewModel.country.currencySimbol
                 self.callingCodeLabel.text = viewModel.country.callingCode
                 
                 // Add region image
-                let regionImageViewShadowContainer = BubbleView()
-                regionImageViewShadowContainer.config(contentView: self.regionImageView)
-                bubblesStack.addArrangedSubview(regionImageViewShadowContainer)
-                regionImageViewShadowContainer.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    regionImageViewShadowContainer.heightAnchor.constraint(equalToConstant: 44),
-                    regionImageViewShadowContainer.widthAnchor.constraint(equalToConstant: 44)
-                ])
+                if let regionImage = viewModel.country.region?.imageName {
+                    self.regionImageView.image = UIImage(named: regionImage)
+                    let regionImageViewShadowContainer = BubbleView()
+                    regionImageViewShadowContainer.config(contentView: self.regionImageView)
+                    bubblesStack.addArrangedSubview(regionImageViewShadowContainer)
+                    regionImageViewShadowContainer.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        regionImageViewShadowContainer.heightAnchor.constraint(equalToConstant: 44),
+                        regionImageViewShadowContainer.widthAnchor.constraint(equalToConstant: 44)
+                    ])
+                }
                 
                 // Add currency simbol
                 if viewModel.country.currencySimbol != nil {
@@ -323,8 +324,9 @@ class DetailViewController: UIViewController {
                 }
             },
             onError: { error in
-                // TODO: onError
-                print(error)
+                let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
             }
         )
         
@@ -334,5 +336,9 @@ class DetailViewController: UIViewController {
     
     @objc private func onBackTap(sender: UIButton!){
         viewModel?.onBackDidTap()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        viewModel?.onClose()
     }
 }

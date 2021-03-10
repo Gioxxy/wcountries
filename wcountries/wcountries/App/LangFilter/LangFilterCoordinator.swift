@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LangFilterCoordinatorDelegate: class {
-    func onPop(_ coordinator: LangFilterCoordinatorDelegate)
+    func onClose(_ coordinator: LangFilterCoordinator)
     func onLanguageSelected(iso639_2: String)
     func onLanguageDeselected()
 }
@@ -27,9 +27,17 @@ class LangFilterCoordinator {
         vc.config(viewModel: LangFilterViewModel(self, manager: LangFilterManager(), selectedIso639_2: selectedIso639_2))
         self.navigationController.present(vc, animated: true)
     }
+    
+    deinit {
+        print(String(describing: self) + " deinit")
+    }
 }
 
 extension LangFilterCoordinator: LangFilterViewModelDelegate {
+    func onClose(){
+        delegate?.onClose(self)
+    }
+    
     func onLanguageSelected(iso639_2: String) {
         delegate?.onLanguageSelected(iso639_2: iso639_2)
     }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol DetailViewModelDelegate: class {
     func onBackDidTap()
+    func onClose()
 }
 
 class DetailViewModel {
@@ -17,6 +18,10 @@ class DetailViewModel {
     private var model: CountryModel
     var country: CountryViewModel
     var neighboringCountries: NeighboringCountriesRow?
+    
+//    deinit {
+//        print(String(describing: self) + " deinit")
+//    }
     
     init(_ delegate: DetailViewModelDelegate? = nil, manager: DetailManager, model: CountryModel) {
         self.delegate = delegate
@@ -64,6 +69,10 @@ class DetailViewModel {
     
     func onBackDidTap() {
         delegate?.onBackDidTap()
+    }
+    
+    func onClose(){
+        delegate?.onClose()
     }
 }
 

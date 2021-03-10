@@ -52,11 +52,6 @@ class LangFilterViewController: UIViewController {
         fetchData()
     }
     
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        viewModel?.onClose()
-        super.dismiss(animated: flag, completion: completion)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         viewModel?.onClose()
         super.viewWillDisappear(animated)
@@ -100,15 +95,28 @@ class LangFilterViewController: UIViewController {
     }
     
     private func fetchData(){
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.startAnimating()
+        spinner.color = AppColors.bubbles
         viewModel?.getLanguages(
-            onStart: {},
-            onCompletion: {},
+            onStart: {
+                self.view.addSubview(spinner)
+                spinner.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    spinner.centerXAnchor.constraint(equalTo: self.listView.tableView.centerXAnchor),
+                    spinner.centerYAnchor.constraint(equalTo: self.listView.tableView.centerYAnchor)
+                ])
+            },
+            onCompletion: {
+                spinner.removeFromSuperview()
+            },
             onSuccess: { [weak self] viewModel in
                 self?.listView.update()
             },
             onError: { error in
-                // TODO: Show error
-                print(error)
+                let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
             }
         )
     }
@@ -121,7 +129,7 @@ class LangFilterViewController: UIViewController {
 extension LangFilterViewController: LangFilterListViewDelegate {
     func onItemSelected(_ listView: LangFilterListView, viewModel: LangFilterViewModel.LanguageViewModel) {
         self.viewModel?.onLanguageSelected(viewModel: viewModel)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.dismiss(animated: true)
         }
     }
