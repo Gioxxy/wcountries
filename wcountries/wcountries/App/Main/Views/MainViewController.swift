@@ -32,15 +32,18 @@ class MainViewController: UIViewController {
     private let mainGridView: MainGridView = MainGridView()
     
     func config(viewModel: MainViewModel){
-        viewModel.updateGridView = {
+        viewModel.updateGridView = { [weak self] in
+            guard let self = self else { return }
             self.mainGridView.update()
         }
-        viewModel.showError = { error in
+        viewModel.showError = { [weak self] error in
+            guard let self = self else { return }
             let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             self.present(alert, animated: true, completion: nil)
         }
-        viewModel.showLoader = {
+        viewModel.showLoader = { [weak self] in
+            guard let self = self else { return }
             self.view.addSubview(self.loader)
             self.loader.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -52,7 +55,8 @@ class MainViewController: UIViewController {
                 self.loader.isHidden = false
             })
         }
-        viewModel.dismissLoader = {
+        viewModel.dismissLoader = { [weak self] in
+            guard let self = self else { return }
             self.loader.removeFromSuperview()
         }
         self.viewModel = viewModel

@@ -38,11 +38,11 @@ class LangFilterViewController: UIViewController {
         titleLabel.text = "Filtra per lingua"
         closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapClose)))
         searchBar.config(
-            onSearch: { text in
-                self.viewModel?.onSearch(text: text)
+            onSearch: { [weak self] text in
+                self?.viewModel?.onSearch(text: text)
             },
-            onSearchEnd: {
-                self.viewModel?.onSearchEnd()
+            onSearchEnd: { [weak self] in
+                self?.viewModel?.onSearchEnd()
             }
         )
         listView.config(self, viewModel: viewModel)
@@ -99,7 +99,8 @@ class LangFilterViewController: UIViewController {
         spinner.startAnimating()
         spinner.color = AppColors.bubbles
         viewModel?.getLanguages(
-            onStart: {
+            onStart: { [weak self] in
+                guard let self = self else { return }
                 self.view.addSubview(spinner)
                 spinner.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
@@ -113,10 +114,10 @@ class LangFilterViewController: UIViewController {
             onSuccess: { [weak self] viewModel in
                 self?.listView.update()
             },
-            onError: { error in
+            onError: { [weak self] error in
                 let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
+                self?.present(alert, animated: true, completion: nil)
             }
         )
     }
@@ -130,8 +131,8 @@ class LangFilterViewController: UIViewController {
 extension LangFilterViewController: LangFilterListViewDelegate {
     func onItemSelected(_ listView: LangFilterListView, viewModel: LangFilterViewModel.LanguageViewModel) {
         self.viewModel?.onLanguageSelected(viewModel: viewModel)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            self.dismiss(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+            self?.dismiss(animated: true)
         }
     }
     

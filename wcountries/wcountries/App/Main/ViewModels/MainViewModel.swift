@@ -62,7 +62,8 @@ class MainViewModel {
                                 self.dismissLoader?()
                                 self.updateGridView?()
                             },
-                            onError: { error in
+                            onError: { [weak self] error in
+                                guard let self = self else { return }
                                 self.dismissLoader?()
                                 self.showError?(error)
                             }
@@ -74,7 +75,8 @@ class MainViewModel {
                         self.updateGridView?()
                     }
                 },
-                onError: { error in
+                onError: { [weak self] error in
+                    guard let self = self else { return }
                     self.dismissLoader?()
                     self.showError?(error)
                 }
@@ -95,7 +97,8 @@ class MainViewModel {
                         self.dismissLoader?()
                         self.updateGridView?()
                     },
-                    onError: { error in
+                    onError: { [weak self] error in
+                        guard let self = self else { return }
                         self.dismissLoader?()
                         self.showError?(error)
                     }
@@ -109,7 +112,8 @@ class MainViewModel {
                         self.dismissLoader?()
                         self.updateGridView?()
                     },
-                    onError: { error in
+                    onError: { [weak self] error in
+                        guard let self = self else { return }
                         self.dismissLoader?()
                         self.showError?(error)
                     }
@@ -128,7 +132,8 @@ class MainViewModel {
                 self.dismissLoader?()
                 self.updateGridView?()
             },
-            onError: { error in
+            onError: { [weak self] error in
+                guard let self = self else { return }
                 self.dismissLoader?()
                 self.showError?(error)
             }
@@ -154,7 +159,8 @@ class MainViewModel {
                             self.dismissLoader?()
                             self.updateGridView?()
                         },
-                        onError: { error in
+                        onError: { [weak self] error in
+                            guard let self = self else { return }
                             self.dismissLoader?()
                             self.showError?(error)
                         }
@@ -166,7 +172,8 @@ class MainViewModel {
                     self.updateGridView?()
                 }
             },
-            onError: { error in
+            onError: { [weak self] error in
+                guard let self = self else { return }
                 self.dismissLoader?()
                 self.showError?(error)
             }
@@ -186,7 +193,8 @@ class MainViewModel {
                     self.dismissLoader?()
                     self.updateGridView?()
                 },
-                onError: { error in
+                onError: { [weak self] error in
+                    guard let self = self else { return }
                     self.dismissLoader?()
                     self.showError?(error)
                 }
@@ -200,7 +208,8 @@ class MainViewModel {
                     self.dismissLoader?()
                     self.updateGridView?()
                 },
-                onError: { error in
+                onError: { [weak self] error in
+                    guard let self = self else { return }
                     self.dismissLoader?()
                     self.showError?(error)
                 }

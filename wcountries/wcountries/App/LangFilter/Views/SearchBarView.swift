@@ -47,13 +47,13 @@ class SearchBarView: UISearchBar, UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] timer in
             if searchText == "" {
-                self.timer?.invalidate()
-                self.timer = nil
-                self.onSearchEnd?()
+                self?.timer?.invalidate()
+                self?.timer = nil
+                self?.onSearchEnd?()
             } else {
-                self.onSearch?(searchText)
+                self?.onSearch?(searchText)
             }
         })
     }

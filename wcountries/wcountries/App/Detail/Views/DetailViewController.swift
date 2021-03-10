@@ -320,7 +320,8 @@ class DetailViewController: UIViewController {
                     ])
                 }
             },
-            onError: { error in
+            onError: { [weak self] error in
+                guard let self = self else { return }
                 let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true, completion: nil)
