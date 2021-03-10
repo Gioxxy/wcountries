@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - LangFilterModel
 struct LangFilterModel: Decodable {
     let languages: [LanguageModel]
 }

@@ -38,12 +38,14 @@ class MainCoordinator {
     }
 }
 
+// MARK: - DetailCoordinatorDelegate
 extension MainCoordinator: DetailCoordinatorDelegate {
     func onClose(_ coordinator: DetailCoordinator) {
         detailCoordinator = nil
     }
 }
 
+// MARK: - LangFilterCoordinatorDelegate
 extension MainCoordinator: LangFilterCoordinatorDelegate {
     func onClose(_ coordinator: LangFilterCoordinator) {
         langFilterCoordinator = nil

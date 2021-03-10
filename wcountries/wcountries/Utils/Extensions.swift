@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - URL
 extension URL {
     mutating func appendQueryParam(key: String, value: String?) {
         guard var urlComponents = URLComponents(string: absoluteString) else { return }
@@ -27,6 +28,7 @@ extension URL {
     }
 }
 
+// MARK: - UIImageView
 extension UIImageView {
     func imageFromNetwork(url: URL?, then: ((UIImage)->Void)? = nil) {
         guard let url = url else { return }
@@ -35,12 +37,13 @@ extension UIImageView {
             diskCapacity: 100*1024*1024,
             diskPath: "wcountriesImageCache"
         )
-//        if let data = cache.cachedResponse(for: URLRequest(url: url))?.data {
-//            guard let image = UIImage(data: data) else { return }
-//            DispatchQueue.main.async() {
-//                self.image = image
-//            }
-//        } else {
+        if let data = cache.cachedResponse(for: URLRequest(url: url))?.data {
+            guard let image = UIImage(data: data) else { return }
+            DispatchQueue.main.async() {
+                self.image = image
+                then?(image)
+            }
+        } else {
             let sessionConfiguration = URLSessionConfiguration.default
             sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
             sessionConfiguration.urlCache = cache
@@ -57,14 +60,15 @@ extension UIImageView {
                     then?(image)
                 }
             }.resume()
-//        }
+        }
     }
 }
 
+// MARK: - Array
 extension Array {
     func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
-        var set = Set<T>() //the unique list kept in a Set for fast retrieval
-        var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
+        var set = Set<T>() // The unique list kept in a Set for fast retrieval
+        var arrayOrdered = [Element]() // Keeping the unique list of elements but ordered
         for value in self {
             if !set.contains(map(value)) {
                 set.insert(map(value))

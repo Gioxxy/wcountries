@@ -39,6 +39,7 @@ class ContinentFilterView: UIStackView {
     }
 }
 
+// MARK: - ContinentFilterViewCellDelegate
 extension ContinentFilterView: ContinentFilterViewCellDelegate {
     func didTapOnCell(cell: ContinentFilterViewCell, viewModel: MainViewModel.RegionViewModel) {
         self.subviews.forEach({ ($0 as? ContinentFilterViewCell)?.setDeselected() })

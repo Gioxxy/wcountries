@@ -30,22 +30,20 @@ final class CountriesAPI {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.cachePolicy = .useProtocolCachePolicy
         
-//        if let data = cache.cachedResponse(for: request)?.data, let response = cache.cachedResponse(for: request)?.response {
-//            guard let response = response as? HTTPURLResponse else {
-//                print("Not a HTTP response")
-//                onError?()
-//                return
-//            }
-//            guard response.statusCode == 200 else {
-//                print("Invalid HTTP status code \(response.statusCode)")
-//                onError?()
-//                return
-//            }
-//            onSuccess?(data)
-//        } else {
+        if let data = cache.cachedResponse(for: request)?.data, let response = cache.cachedResponse(for: request)?.response {
+            guard let response = response as? HTTPURLResponse else {
+                onError?("Not a HTTP response")
+                return
+            }
+            guard response.statusCode == 200 else {
+                onError?("Invalid HTTP status code \(response.statusCode)")
+                return
+            }
+            onSuccess?(data)
+        } else {
             let sessionConfiguration = URLSessionConfiguration.default
-//            sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
-//            sessionConfiguration.urlCache = cache
+            sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
+            sessionConfiguration.urlCache = cache
             URLSession(configuration: sessionConfiguration).dataTask(with: request, completionHandler: { data, response, error -> Void in
                 
                 if let error = error {
@@ -77,13 +75,11 @@ final class CountriesAPI {
                     return
                 }
                 
-//                cache.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
+                cache.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
                 DispatchQueue.main.async {
                     onSuccess?(data)
                 }
             }).resume()
-//        }
-
-       
+        }
     }
 }

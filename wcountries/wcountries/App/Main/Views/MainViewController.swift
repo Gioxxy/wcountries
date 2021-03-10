@@ -138,6 +138,7 @@ class MainViewController: UIViewController {
     }
 }
 
+// MARK: - MainGridViewDelegate
 extension MainViewController: MainGridViewDelegate {
     func onScrollListener(_ gridView: MainGridView, scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 5 {
@@ -160,6 +161,7 @@ extension MainViewController: MainGridViewDelegate {
     }
 }
 
+// MARK: - ContinentFilterViewDelegate
 extension MainViewController: ContinentFilterViewDelegate {
     func didSelectContinent(continent: MainViewModel.RegionViewModel) {
         viewModel?.didSelectContinent(continent: continent)

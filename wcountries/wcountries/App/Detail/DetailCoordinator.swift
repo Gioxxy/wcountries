@@ -32,6 +32,7 @@ class DetailCoordinator {
     }
 }
 
+// MARK: - DetailViewModelDelegate
 extension DetailCoordinator: DetailViewModelDelegate {
     func onBackDidTap() {
         navigationController.popViewController(animated: true)

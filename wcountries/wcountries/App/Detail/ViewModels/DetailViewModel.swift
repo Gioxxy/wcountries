@@ -19,10 +19,6 @@ class DetailViewModel {
     var country: CountryViewModel
     var neighboringCountries: NeighboringCountriesRow?
     
-//    deinit {
-//        print(String(describing: self) + " deinit")
-//    }
-    
     init(_ delegate: DetailViewModelDelegate? = nil, manager: DetailManager, model: CountryModel) {
         self.delegate = delegate
         self.manager = manager
@@ -36,14 +32,14 @@ class DetailViewModel {
         manager.getCountry(
             alpha3Code: model.alpha3Code,
             onSuccess: { [weak self] model in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 self.model = model
                 self.country = CountryViewModel(model: model)
                 if let borders = model.borders, borders.count > 0 {
                     self.manager.getAlpha2Codes(
                         alpha3Codes: borders,
                         onSuccess: {  [weak self] bordersAlpha2Codes in
-                            guard let `self` = self else { return }
+                            guard let self = self else { return }
                             if bordersAlpha2Codes.count > 0 {
                                 self.neighboringCountries = NeighboringCountriesRow(alpha2Codes: bordersAlpha2Codes)
                             }
@@ -76,6 +72,7 @@ class DetailViewModel {
     }
 }
 
+// MARK: - CountryViewModel, RegionViewModel, DetailRowViewModel, NeighboringCountriesRow, NeighboringCountry
 extension DetailViewModel {
     class CountryViewModel {
         var name: String

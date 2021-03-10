@@ -116,7 +116,7 @@ class DetailViewController: UIViewController {
         imageView.imageFromNetwork(
             url: viewModel?.country.imageURL,
             then: { [weak self] image in
-                // Set flag aspect ratio
+                // Set aspect ratio
                 if let imageViewShadowContainer = self?.imageViewShadowContainer {
                     let aspectRatio = image.size.width / image.size.height
                     imageViewShadowContainer.widthAnchor.constraint(equalTo: imageViewShadowContainer.heightAnchor, multiplier: aspectRatio).isActive = true
@@ -184,7 +184,6 @@ class DetailViewController: UIViewController {
         
         // Add container
         scrollView.addSubview(containerView)
-//        let bottomInset: CGFloat = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0 > 0 ? 0 : -18
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
@@ -229,7 +228,7 @@ class DetailViewController: UIViewController {
                 spinner.removeFromSuperview()
             },
             onSuccess: { [weak self] viewModel in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 
                 // Add horizontal stack container
                 let bubblesStack: UIStackView = UIStackView()
@@ -242,7 +241,6 @@ class DetailViewController: UIViewController {
                     bubblesStack.topAnchor.constraint(equalTo: self.imageViewShadowContainer.bottomAnchor, constant: 38),
                     bubblesStack.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor)
                 ])
-                
                 
                 self.currencySimbolLabel.text = viewModel.country.currencySimbol
                 self.callingCodeLabel.text = viewModel.country.callingCode
@@ -316,7 +314,6 @@ class DetailViewController: UIViewController {
                     ])
                 }
                 
-                
                 if let lastView = self.containerView.subviews.last {
                     NSLayoutConstraint.activate([
                         self.containerView.bottomAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 18)
@@ -329,9 +326,6 @@ class DetailViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
         )
-        
-
-
     }
     
     @objc private func onBackTap(sender: UIButton!){

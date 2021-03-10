@@ -126,6 +126,7 @@ class LangFilterViewController: UIViewController {
     }
 }
 
+// MARK: - LangFilterListViewDelegate
 extension LangFilterViewController: LangFilterListViewDelegate {
     func onItemSelected(_ listView: LangFilterListView, viewModel: LangFilterViewModel.LanguageViewModel) {
         self.viewModel?.onLanguageSelected(viewModel: viewModel)

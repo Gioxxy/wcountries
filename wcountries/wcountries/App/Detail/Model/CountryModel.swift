@@ -75,6 +75,7 @@ struct TranslationsModel: Decodable {
     let pt: String?
 }
 
+// MARK: - RegionType
 enum RegionType: String, Decodable {
     case Africa
     case Americas

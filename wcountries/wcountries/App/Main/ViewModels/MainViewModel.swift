@@ -42,19 +42,19 @@ class MainViewModel {
         self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
         
         self.coordinator?.filterByLanguage = { [weak self] iso639_2 in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             self.showLoader?()
             self.selectedIso639_2 = iso639_2
             self.manager.getCountriesBy(
                 iso639_2: iso639_2,
                 onSuccess: { [weak self] modelByLanguage in
-                    guard let `self` = self else { return }
+                    guard let self = self else { return }
                     
                     if let selectedContinent = self.selectedContinent {
                         self.manager.getCountriesBy(
                             continent: selectedContinent,
                             onSuccess: { [weak self] modelByContinent in
-                                guard let `self` = self else { return }
+                                guard let self = self else { return }
                                 self.model = modelByLanguage.filter({ country in
                                     modelByContinent.contains(where: { $0.name == country.name })
                                 })
@@ -82,14 +82,14 @@ class MainViewModel {
         }
         
         self.coordinator?.cleanLanguageFilter = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             self.showLoader?()
             self.selectedIso639_2 = nil
             if let selectedContinent = self.selectedContinent {
                 manager.getCountriesBy(
                     continent: selectedContinent,
                     onSuccess: { [weak self] model in
-                        guard let `self` = self else { return }
+                        guard let self = self else { return }
                         self.model = model
                         self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
                         self.dismissLoader?()
@@ -103,7 +103,7 @@ class MainViewModel {
             } else {
                 manager.getCountries(
                     onSuccess: { [weak self] model in
-                        guard let `self` = self else { return }
+                        guard let self = self else { return }
                         self.model = model
                         self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
                         self.dismissLoader?()
@@ -122,7 +122,7 @@ class MainViewModel {
         self.showLoader?()
         manager.getCountries(
             onSuccess: { [weak self] model in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 self.model = model
                 self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
                 self.dismissLoader?()
@@ -141,12 +141,12 @@ class MainViewModel {
         manager.getCountriesBy(
             continent: continent,
             onSuccess: { [weak self] modelByContinent in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 if let selectedIso639_2 = self.selectedIso639_2 {
                     self.manager.getCountriesBy(
                         iso639_2: selectedIso639_2,
                         onSuccess: { [weak self] modelByLanguage in
-                            guard let `self` = self else { return }
+                            guard let self = self else { return }
                             self.model = modelByContinent.filter({ country in
                                 modelByLanguage.contains(where: { $0.name == country.name })
                             })
@@ -180,7 +180,7 @@ class MainViewModel {
             manager.getCountriesBy(
                 iso639_2: selectedIso639_2,
                 onSuccess: { [weak self] model in
-                    guard let `self` = self else { return }
+                    guard let self = self else { return }
                     self.model = model
                     self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
                     self.dismissLoader?()
@@ -194,7 +194,7 @@ class MainViewModel {
         } else {
             manager.getCountries(
                 onSuccess: { [weak self] model in
-                    guard let `self` = self else { return }
+                    guard let self = self else { return }
                     self.model = model
                     self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
                     self.dismissLoader?()
@@ -219,6 +219,7 @@ class MainViewModel {
     }
 }
 
+// MARK: - RegionViewModel, CountryViewModel
 extension MainViewModel {
     class RegionViewModel {
         let type: RegionType

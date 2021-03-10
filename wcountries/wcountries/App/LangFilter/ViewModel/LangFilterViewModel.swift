@@ -50,7 +50,7 @@ class LangFilterViewModel {
         onStart?()
         manager.getLanguages(
             onSuccess: { [weak self] model in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 self.model = model
                 self.languages = model.flatMap({ $0.languages }).unique(map: { $0.iso639_2 }).map({ model in
                     let isSelected = model.iso639_2 == self.lastSelectedLanguageIso639_2 || self.languages.first(where: {$0.iso639_2 == model.iso639_2 })?.isSelected ?? false
@@ -96,6 +96,7 @@ class LangFilterViewModel {
     }
 }
 
+// MARK: - LanguageViewModel
 extension LangFilterViewModel {
     class LanguageViewModel {
         let iso639_2: String

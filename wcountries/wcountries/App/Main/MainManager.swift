@@ -44,6 +44,7 @@ class MainManager {
         )
     }
     
+    // Get countries by language code iso639_2
     func getCountriesBy(iso639_2: String, onSuccess: ((_ mainModel: [MainCountryModel])->Void)? = nil, onError: ((String)->Void)? = nil){
         CountriesAPI.get(
             route: "/lang/"+iso639_2,

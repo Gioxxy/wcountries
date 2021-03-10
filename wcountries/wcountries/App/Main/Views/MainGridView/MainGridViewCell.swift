@@ -60,7 +60,6 @@ final class MainGridViewCell: UICollectionViewCell {
     }
     
     private func addViews(){
-        
         imageViewShadowContainer.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
