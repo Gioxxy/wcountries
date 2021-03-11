@@ -25,6 +25,8 @@
 		9F9A524725FA624B006C6099 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A524625FA624B006C6099 /* Coordinator.swift */; };
 		9F9A525425FA6AF4006C6099 /* DetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A525325FA6AF4006C6099 /* DetailTests.swift */; };
 		9F9A525C25FA77E0006C6099 /* CountryModelTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */; };
+		9FA9DD5B25FAC01E003E6B94 /* LangFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9DD5A25FAC01E003E6B94 /* LangFilterTests.swift */; };
+		9FA9DD6025FAC0F1003E6B94 /* LangFilterTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9FA9DD5F25FAC0F1003E6B94 /* LangFilterTestData.json */; };
 		9FACD26425EEF7F7000201FC /* MainCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26325EEF7F7000201FC /* MainCountryModel.swift */; };
 		9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26C25EEFEDD000201FC /* DetailManager.swift */; };
 		9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */; };
@@ -86,6 +88,8 @@
 		9F9A524625FA624B006C6099 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		9F9A525325FA6AF4006C6099 /* DetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTests.swift; sourceTree = "<group>"; };
 		9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryModelTestData.json; sourceTree = "<group>"; };
+		9FA9DD5A25FAC01E003E6B94 /* LangFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterTests.swift; sourceTree = "<group>"; };
+		9FA9DD5F25FAC0F1003E6B94 /* LangFilterTestData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LangFilterTestData.json; sourceTree = "<group>"; };
 		9FACD26325EEF7F7000201FC /* MainCountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCountryModel.swift; sourceTree = "<group>"; };
 		9FACD26C25EEFEDD000201FC /* DetailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailManager.swift; sourceTree = "<group>"; };
 		9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleVeiw.swift; sourceTree = "<group>"; };
@@ -228,8 +232,8 @@
 		9F9A525125FA6AB8006C6099 /* MainTests */ = {
 			isa = PBXGroup;
 			children = (
-				9F9A523B25FA1BF4006C6099 /* MainCountryModelTestData.json */,
 				F790E0AD25E96EB1003757F9 /* MainTests.swift */,
+				9F9A523B25FA1BF4006C6099 /* MainCountryModelTestData.json */,
 			);
 			path = MainTests;
 			sourceTree = "<group>";
@@ -237,10 +241,19 @@
 		9F9A525225FA6AC8006C6099 /* DetailTests */ = {
 			isa = PBXGroup;
 			children = (
-				9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */,
 				9F9A525325FA6AF4006C6099 /* DetailTests.swift */,
+				9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */,
 			);
 			path = DetailTests;
+			sourceTree = "<group>";
+		};
+		9FA9DD4E25FABFC9003E6B94 /* LangFilterTests */ = {
+			isa = PBXGroup;
+			children = (
+				9FA9DD5A25FAC01E003E6B94 /* LangFilterTests.swift */,
+				9FA9DD5F25FAC0F1003E6B94 /* LangFilterTestData.json */,
+			);
+			path = LangFilterTests;
 			sourceTree = "<group>";
 		};
 		9FACD26825EEFDF4000201FC /* Model */ = {
@@ -295,6 +308,7 @@
 		F790E0AC25E96EB1003757F9 /* wcountriesTests */ = {
 			isa = PBXGroup;
 			children = (
+				9FA9DD4E25FABFC9003E6B94 /* LangFilterTests */,
 				9F9A525125FA6AB8006C6099 /* MainTests */,
 				9F9A525225FA6AC8006C6099 /* DetailTests */,
 				F790E0AF25E96EB1003757F9 /* Info.plist */,
@@ -516,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9A525C25FA77E0006C6099 /* CountryModelTestData.json in Resources */,
+				9FA9DD6025FAC0F1003E6B94 /* LangFilterTestData.json in Resources */,
 				9F9A523C25FA1BF5006C6099 /* MainCountryModelTestData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,6 +592,7 @@
 			files = (
 				9F9A525425FA6AF4006C6099 /* DetailTests.swift in Sources */,
 				F790E0AE25E96EB1003757F9 /* MainTests.swift in Sources */,
+				9FA9DD5B25FAC01E003E6B94 /* LangFilterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

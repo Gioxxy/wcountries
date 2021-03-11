@@ -180,9 +180,17 @@ class MainTests: XCTestCase {
         // Given
         let mainCoordinator = MainCoordinator(navigationController: SwipeBackNavigationController())
         let sut = MainViewModel(mainCoordinator, manager: TestableMainManager())
+        let expetaction = XCTestExpectation(description: "Expected to get countries")
+        
+        sut.updateGridView = {
+            expetaction.fulfill()
+        }
         
         // When
         sut.getCountries()
+        
+        wait(for: [expetaction], timeout: 5.0)
+        
         sut.didTapOnCountry(viewModel: MainViewModel.CountryViewModel(name: "Italy", alpha2Code: "IT"))
         
         // Then

@@ -36,6 +36,7 @@ class LangFilterViewModel {
     
     var updateListView: (()->Void)? = nil
     
+    
     deinit {
         print(String(describing: self) + " deinit")
     }
