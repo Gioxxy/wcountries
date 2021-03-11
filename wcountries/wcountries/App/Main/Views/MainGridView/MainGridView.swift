@@ -18,12 +18,12 @@ final class MainGridView: UICollectionViewController {
     private weak var delegate: MainGridViewDelegate?
     
     init(){
-        let inset = UIScreen.main.bounds.width.truncatingRemainder(dividingBy: 173) / 2
+        let inset = UIScreen.main.bounds.width.truncatingRemainder(dividingBy: 183) / 2
         let flow = UICollectionViewFlowLayout()
         flow.scrollDirection = .vertical
-        flow.minimumInteritemSpacing = 20
-        flow.minimumLineSpacing = 20
-        flow.itemSize = CGSize(width: 163, height: 163)
+        flow.minimumInteritemSpacing = 0
+        flow.minimumLineSpacing = 0
+        flow.itemSize = CGSize(width: 183, height: 183)
         flow.sectionInset = UIEdgeInsets(top: 180, left: inset, bottom: 30, right: inset)
         
         super.init(collectionViewLayout: flow)

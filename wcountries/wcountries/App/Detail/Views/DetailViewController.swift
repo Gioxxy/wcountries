@@ -208,8 +208,9 @@ class DetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             imageViewShadowContainer.centerYAnchor.constraint(equalTo: containerView.topAnchor, constant: -10),
             imageViewShadowContainer.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            imageViewShadowContainer.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 100),
-            imageViewShadowContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -100)
+            imageViewShadowContainer.leadingAnchor.constraint(greaterThanOrEqualTo: containerView.leadingAnchor, constant: 100),
+            imageViewShadowContainer.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -100),
+            imageViewShadowContainer.widthAnchor.constraint(lessThanOrEqualToConstant: 400)
         ])
         
         let spinner = UIActivityIndicatorView(style: .large)

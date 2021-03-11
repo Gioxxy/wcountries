@@ -11,6 +11,8 @@ final class MainGridViewCell: UICollectionViewCell {
     
     static let cellId = String(describing: self)
     
+    private let view = UIView()
+    
     private let imageViewShadowContainer: UIView = {
         let imageViewShadowContainer = UIView()
         imageViewShadowContainer.layer.shadowColor = UIColor.black.cgColor
@@ -49,17 +51,27 @@ final class MainGridViewCell: UICollectionViewCell {
     }
     
     private func setupView(){
-        contentView.backgroundColor = AppColors.primary
-        contentView.layer.cornerRadius = 10
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        contentView.layer.shadowRadius = 3
-        contentView.layer.shadowOpacity = 0.2
-        contentView.layer.masksToBounds = false
-        contentView.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        view.backgroundColor = AppColors.primary
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        view.layer.shadowRadius = 3
+        view.layer.shadowOpacity = 0.2
+        view.layer.masksToBounds = false
+        view.layer.shouldRasterize = true
+        view.layer.rasterizationScale = UIScreen.main.scale
     }
     
     private func addViews(){
+        contentView.addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+        ])
+        
         imageViewShadowContainer.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -69,22 +81,22 @@ final class MainGridViewCell: UICollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: imageViewShadowContainer.trailingAnchor)
         ])
         
-        contentView.addSubview(imageViewShadowContainer)
+        view.addSubview(imageViewShadowContainer)
         imageViewShadowContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageViewShadowContainer.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageViewShadowContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -20),
+            imageViewShadowContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageViewShadowContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
             imageViewShadowContainer.heightAnchor.constraint(equalToConstant: 60)
         ])
         
-        contentView.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: imageViewShadowContainer.bottomAnchor, constant: 5),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -10),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 10),
-            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            titleLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -10),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 10),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
