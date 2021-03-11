@@ -10,13 +10,13 @@ import Foundation
 class MainViewModel {
     private weak var coordinator: MainCoordinator?
     private var manager: MainManager
-    private var model: [MainCountryModel]
+    private var model = [MainCountryModel]()
     
-    var regions: [RegionViewModel]
-    var countries: [CountryViewModel]
+    private(set) var regions: [RegionViewModel]
+    private(set) var countries = [CountryViewModel]()
     
-    var selectedIso639_2: String? = nil
-    var selectedContinent: MainViewModel.RegionViewModel? = nil
+    private(set) var selectedIso639_2: String? = nil
+    private(set) var selectedContinent: MainViewModel.RegionViewModel? = nil
     
     var updateGridView: (()->Void)? = nil
     var showError: ((String)->Void)? = nil
@@ -27,10 +27,9 @@ class MainViewModel {
         print(String(describing: self) + " deinit")
     }
     
-    init(_ coordinator: MainCoordinator? = nil, manager: MainManager, model: [MainCountryModel]) {
+    init(_ coordinator: MainCoordinator? = nil, manager: MainManager) {
         self.coordinator = coordinator
         self.manager = manager
-        self.model = model
         self.regions = [
             RegionViewModel(.Africa),
             RegionViewModel(.Americas),
@@ -38,9 +37,7 @@ class MainViewModel {
             RegionViewModel(.Europe),
             RegionViewModel(.Oceania)
         ]
-        
-        self.countries = model.map({ CountryViewModel(name: $0.name, alpha2Code: $0.alpha2Code) })
-        
+                
         self.coordinator?.filterByLanguage = { [weak self] iso639_2 in
             guard let self = self else { return }
             self.showLoader?()

@@ -15,25 +15,22 @@ protocol DetailViewModelDelegate: class {
 class DetailViewModel {
     private weak var delegate: DetailViewModelDelegate?
     private var manager: DetailManager
-    private var model: CountryModel
-    var country: CountryViewModel
-    var neighboringCountries: NeighboringCountriesRow?
+    private(set) var country: CountryViewModel
+    private(set) var neighboringCountries: NeighboringCountriesRow?
     
-    init(_ delegate: DetailViewModelDelegate? = nil, manager: DetailManager, model: CountryModel) {
+    init(_ delegate: DetailViewModelDelegate? = nil, manager: DetailManager, model: MainCountryModel) {
         self.delegate = delegate
         self.manager = manager
-        self.model = model
         self.country = CountryViewModel(model: model)
         self.neighboringCountries = nil
     }
     
-    func getCountry(onStart: (()->Void)? = nil, onCompletion: (()->Void)? = nil, onSuccess: ((DetailViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
+    func getCountry(alpha3Code: String, onStart: (()->Void)? = nil, onCompletion: (()->Void)? = nil, onSuccess: ((DetailViewModel)->Void)? = nil, onError: ((String)->Void)? = nil){
         onStart?()
         manager.getCountry(
-            alpha3Code: model.alpha3Code,
+            alpha3Code: alpha3Code,
             onSuccess: { [weak self] model in
                 guard let self = self else { return }
-                self.model = model
                 self.country = CountryViewModel(model: model)
                 if let borders = model.borders, borders.count > 0 {
                     self.manager.getAlpha2Codes(
@@ -75,13 +72,19 @@ class DetailViewModel {
 // MARK: - CountryViewModel, RegionViewModel, DetailRowViewModel, NeighboringCountriesRow, NeighboringCountry
 extension DetailViewModel {
     class CountryViewModel {
-        var name: String
-        var alpha3Code: String
-        var imageURL: URL?
-        var region: RegionViewModel?
-        var currencySimbol: String?
-        var callingCode: String?
-        var details: [DetailRowViewModel] = []
+        private(set) var name: String
+        private(set) var alpha3Code: String
+        private(set) var imageURL: URL?
+        private(set) var region: RegionViewModel?
+        private(set) var currencySimbol: String?
+        private(set) var callingCode: String?
+        private(set) var details: [DetailRowViewModel] = []
+        
+        init(model: MainCountryModel){
+            self.name = model.name
+            self.alpha3Code = model.alpha3Code
+            self.imageURL = URL(string: "https://flagcdn.com/h120/\(model.alpha2Code.lowercased()).png")
+        }
         
         init(model: CountryModel) {
             self.name = model.name.uppercased()

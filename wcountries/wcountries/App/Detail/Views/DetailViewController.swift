@@ -216,7 +216,9 @@ class DetailViewController: UIViewController {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.startAnimating()
         spinner.color = AppColors.bubbles
-        viewModel?.getCountry(
+        guard let viewModel = viewModel else { return }
+        viewModel.getCountry(
+            alpha3Code: viewModel.country.alpha3Code,
             onStart: {
                 self.containerView.addSubview(spinner)
                 spinner.translatesAutoresizingMaskIntoConstraints = false

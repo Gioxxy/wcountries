@@ -20,7 +20,7 @@ class LangFilterViewModel {
     
     private var lastSelectedLanguageIso639_2: String?
     
-    var languages = [LanguageViewModel]()
+    private(set) var languages = [LanguageViewModel]()
     private var searchText: String? = nil
     
     var selectedLanguages: [LanguageViewModel] {

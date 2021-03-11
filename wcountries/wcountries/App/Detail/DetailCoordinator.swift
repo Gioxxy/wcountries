@@ -11,19 +11,22 @@ protocol DetailCoordinatorDelegate: class {
     func onClose(_ coordinator: DetailCoordinator)
 }
 
-class DetailCoordinator {
-    private weak var delegate: DetailCoordinatorDelegate?
-    private var navigationController: SwipeBackNavigationController
+class DetailCoordinator: Coordinator {
+    var navigationController: SwipeBackNavigationController
+    var childCoordinators = [Coordinator]()
     
-    init(_ delegate: DetailCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController){
+    private weak var delegate: DetailCoordinatorDelegate?
+    private var model: MainCountryModel
+    
+    init(_ delegate: DetailCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController, model: MainCountryModel){
         self.delegate = delegate
         self.navigationController = navigationController
+        self.model = model
     }
     
-    func start(model: MainCountryModel){
+    func start(){
         let viewController = DetailViewController()
-        let countryModel = CountryModel(name: model.name, alpha2Code: model.alpha2Code, alpha3Code: model.alpha3Code)
-        viewController.config(viewModel: DetailViewModel(self, manager: DetailManager(), model: countryModel))
+        viewController.config(viewModel: DetailViewModel(self, manager: DetailManager(), model: model))
         self.navigationController.pushViewController(viewController, animated: true)
     }
     

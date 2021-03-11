@@ -10,35 +10,29 @@ import Foundation
 // MARK: - Country
 struct CountryModel: Decodable {
     let name: String
-    var topLevelDomain: [String]? = nil
+    var topLevelDomain: [String]?
     let alpha2Code: String
     let alpha3Code: String
-    var callingCodes: [String]? = nil
-    var capital: String? = nil
-    var altSpellings: [String]? = nil
-    var region: RegionType? = nil
-    var subregion: String? = nil
-    var population: Int? = nil
-    var latlng: [Float]? = nil
-    var demonym: String? = nil
-    var area: Double? = nil
-    var gini: Float? = nil
-    var timezones: [String]? = nil
-    var borders: [String]? = nil
-    var nativeName: String? = nil
-    var numericCode: String? = nil
-    var currencies: [CurrencyModel]? = nil
-    var languages: [LanguageModel]? = nil
-    var translations: TranslationsModel? = nil
-    var flag: URL? = nil
-    var regionalBlocs: [RegionalBlocModel]? = nil
-    var cioc: String? = nil
-    
-    init(name: String, alpha2Code: String, alpha3Code: String) {
-        self.name = name
-        self.alpha2Code = alpha2Code
-        self.alpha3Code = alpha3Code
-    }
+    var callingCodes: [String]?
+    var capital: String?
+    var altSpellings: [String]?
+    var region: RegionType?
+    var subregion: String?
+    var population: Int?
+    var latlng: [Double]?
+    var demonym: String?
+    var area: Double?
+    var gini: Float?
+    var timezones: [String]?
+    var borders: [String]?
+    var nativeName: String?
+    var numericCode: String?
+    var currencies: [CurrencyModel]?
+    var languages: [LanguageModel]?
+    var translations: TranslationsModel?
+    var flag: URL?
+    var regionalBlocs: [RegionalBlocModel]?
+    var cioc: String?
 }
 
 // MARK: - Currency

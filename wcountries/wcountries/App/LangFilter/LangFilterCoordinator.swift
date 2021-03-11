@@ -13,16 +13,20 @@ protocol LangFilterCoordinatorDelegate: class {
     func onLanguageDeselected()
 }
 
-class LangFilterCoordinator {
-    private weak var delegate: LangFilterCoordinatorDelegate?
-    private var navigationController: SwipeBackNavigationController
+class LangFilterCoordinator: Coordinator {
+    var navigationController: SwipeBackNavigationController
+    var childCoordinators = [Coordinator]()
     
-    init(_ delegate: LangFilterCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController){
+    private weak var delegate: LangFilterCoordinatorDelegate?
+    private var selectedIso639_2: String?
+    
+    init(_ delegate: LangFilterCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController, selectedIso639_2: String? = nil){
         self.delegate = delegate
         self.navigationController = navigationController
+        self.selectedIso639_2 = selectedIso639_2
     }
     
-    func start(selectedIso639_2: String? = nil){
+    func start(){
         let vc = LangFilterViewController()
         vc.config(viewModel: LangFilterViewModel(self, manager: LangFilterManager(), selectedIso639_2: selectedIso639_2))
         self.navigationController.present(vc, animated: true)

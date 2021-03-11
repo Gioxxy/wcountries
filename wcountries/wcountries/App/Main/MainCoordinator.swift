@@ -7,11 +7,9 @@
 
 import Foundation
 
-class MainCoordinator {
-    private var navigationController: SwipeBackNavigationController
-    
-    private var detailCoordinator: DetailCoordinator?
-    private var langFilterCoordinator: LangFilterCoordinator?
+class MainCoordinator: Coordinator {
+    var navigationController: SwipeBackNavigationController
+    var childCoordinators = [Coordinator]()
     
     var filterByLanguage: ((_ iso639_2: String)->Void)? = nil
     var cleanLanguageFilter: (()->Void)? = nil
@@ -21,34 +19,35 @@ class MainCoordinator {
     }
     
     func start(){
-        let model = [MainCountryModel]()
         let vc = MainViewController()
-        vc.config(viewModel: MainViewModel(self, manager: MainManager(), model: model))
+        vc.config(viewModel: MainViewModel(self, manager: MainManager()))
         self.navigationController.pushViewController(vc, animated: true)
     }
     
     func startDetail(model: MainCountryModel){
-        detailCoordinator = DetailCoordinator(self, navigationController: navigationController)
-        detailCoordinator?.start(model: model)
+        let detailCoordinator = DetailCoordinator(self, navigationController: navigationController, model: model)
+        addCoordinator(detailCoordinator)
+        detailCoordinator.start()
     }
     
     func startFilter(selectedIso639_2: String? = nil){
-        langFilterCoordinator = LangFilterCoordinator(self, navigationController: navigationController)
-        langFilterCoordinator?.start(selectedIso639_2: selectedIso639_2)
+        let langFilterCoordinator = LangFilterCoordinator(self, navigationController: navigationController, selectedIso639_2: selectedIso639_2)
+        addCoordinator(langFilterCoordinator)
+        langFilterCoordinator.start()
     }
 }
 
 // MARK: - DetailCoordinatorDelegate
 extension MainCoordinator: DetailCoordinatorDelegate {
     func onClose(_ coordinator: DetailCoordinator) {
-        detailCoordinator = nil
+        removeCoordinator(coordinator)
     }
 }
 
 // MARK: - LangFilterCoordinatorDelegate
 extension MainCoordinator: LangFilterCoordinatorDelegate {
     func onClose(_ coordinator: LangFilterCoordinator) {
-        langFilterCoordinator = nil
+        removeCoordinator(coordinator)
     }
     
     func onLanguageSelected(iso639_2: String) {
