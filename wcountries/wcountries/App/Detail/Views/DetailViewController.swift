@@ -10,6 +10,7 @@ import UIKit
 class DetailViewController: UIViewController {
     
     private var viewModel: DetailViewModel?
+    private var shouldPop: Bool = false
     
     private let backButton: UIButton = {
         let arrowBack = UIButton(type: .custom)
@@ -113,6 +114,9 @@ class DetailViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.navigationController?.interactivePopGestureRecognizer?.removeTarget(self, action: #selector(onPopGesture))
+        if shouldPop {
+            viewModel?.onPopGesture()
+        }
     }
     
     private func setupView(){
@@ -351,7 +355,9 @@ class DetailViewController: UIViewController {
     
     @objc func onPopGesture(gesture: UIGestureRecognizer) {
         if gesture.state == .ended {
-            viewModel?.onPopGesture()
+            shouldPop = true
+        } else {
+            shouldPop = false
         }
     }
 }
@@ -359,6 +365,7 @@ class DetailViewController: UIViewController {
 // MARK: - NeighboringCountriesRowDelegate
 extension DetailViewController: NeighboringCountriesRowDelegate {
     func onNeighboringCountryDidTap(country: DetailViewModel.NeighboringCountry) {
+        shouldPop = false
         viewModel?.onNeighboringCountryDidTap(country: country)
     }
 }
