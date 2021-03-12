@@ -61,7 +61,7 @@ class DetailTests: XCTestCase {
         )
         XCTAssertEqual(sut.neighboringCountries?.neighboringCountries[0].alpha2Code, "AT")
         XCTAssertEqual(sut.neighboringCountries?.neighboringCountries[0].imageURL, URL(string: "https://flagcdn.com/h60/at.png"))
-        XCTAssertEqual(sut.country.currencySimbol, "€")
+        XCTAssertEqual(sut.country.currencySymbol, "€")
         XCTAssertEqual(sut.country.details[0].title, "Native name")
         XCTAssertEqual(sut.country.details[0].detail, "Italia")
         XCTAssertEqual(sut.country.details[1].title, "Capital")

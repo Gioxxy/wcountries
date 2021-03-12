@@ -79,7 +79,7 @@ class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private let currencySimbolLabel: UILabel = {
+    private let currencySymbolLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont(name: "AvenirNext-Bold", size: 23)
@@ -258,7 +258,7 @@ class DetailViewController: UIViewController {
                     bubblesStack.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor)
                 ])
                 
-                self.currencySimbolLabel.text = viewModel.country.currencySimbol
+                self.currencySymbolLabel.text = viewModel.country.currencySymbol
                 self.callingCodeLabel.text = viewModel.country.callingCode
                 
                 // Add region image
@@ -274,15 +274,15 @@ class DetailViewController: UIViewController {
                     ])
                 }
                 
-                // Add currency simbol
-                if viewModel.country.currencySimbol != nil {
-                    let currencySimbolShadowContainer = BubbleView()
-                    currencySimbolShadowContainer.config(contentView: self.currencySimbolLabel)
-                    bubblesStack.addArrangedSubview(currencySimbolShadowContainer)
-                    currencySimbolShadowContainer.translatesAutoresizingMaskIntoConstraints = false
+                // Add currency symbol
+                if viewModel.country.currencySymbol != nil {
+                    let currencySymbolShadowContainer = BubbleView()
+                    currencySymbolShadowContainer.config(contentView: self.currencySymbolLabel)
+                    bubblesStack.addArrangedSubview(currencySymbolShadowContainer)
+                    currencySymbolShadowContainer.translatesAutoresizingMaskIntoConstraints = false
                     NSLayoutConstraint.activate([
-                        currencySimbolShadowContainer.heightAnchor.constraint(equalToConstant: 44),
-                        currencySimbolShadowContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 44)
+                        currencySymbolShadowContainer.heightAnchor.constraint(equalToConstant: 44),
+                        currencySymbolShadowContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 44)
                     ])
                 }
                 

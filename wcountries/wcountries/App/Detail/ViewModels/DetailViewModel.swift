@@ -85,7 +85,7 @@ extension DetailViewModel {
         private(set) var alpha3Code: String
         private(set) var imageURL: URL?
         private(set) var region: RegionViewModel?
-        private(set) var currencySimbol: String?
+        private(set) var currencySymbol: String?
         private(set) var callingCode: String?
         private(set) var details: [DetailRowViewModel] = []
         
@@ -107,9 +107,9 @@ extension DetailViewModel {
             }
             
             if let currencies = model.currencies, currencies.count > 0 {
-                self.currencySimbol = currencies.first?.symbol
+                self.currencySymbol = currencies.first?.symbol
             } else {
-                self.currencySimbol = nil
+                self.currencySymbol = nil
             }
             
             if let callingCode = model.callingCodes?.first, callingCode != "" {
