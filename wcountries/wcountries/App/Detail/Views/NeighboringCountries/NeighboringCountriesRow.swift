@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol NeighboringCountriesRowDelegate: class {
+    func onNeighboringCountryDidTap(country: DetailViewModel.NeighboringCountry)
+}
+
 class NeighboringCountriesRow: UIView {
+    private weak var delegate: NeighboringCountriesRowDelegate?
     private var viewModel: DetailViewModel.NeighboringCountriesRow?
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -33,7 +38,8 @@ class NeighboringCountriesRow: UIView {
         return stack
     }()
     
-    func config(viewModel: DetailViewModel.NeighboringCountriesRow, horizontalMargin: CGFloat = 18){
+    func config(_ delegate: NeighboringCountriesRowDelegate, viewModel: DetailViewModel.NeighboringCountriesRow, horizontalMargin: CGFloat = 18){
+        self.delegate = delegate
         self.viewModel = viewModel
         titleLabel.text = viewModel.title
         
@@ -73,9 +79,15 @@ class NeighboringCountriesRow: UIView {
         
         for nc in viewModel?.neighboringCountries ?? [] {
             let ncv = NeighboringCountryView()
-            ncv.config(viewModel: nc)
+            ncv.config(self, viewModel: nc)
             neighboringCountriesStack.addArrangedSubview(ncv)
         }
         
+    }
+}
+
+extension NeighboringCountriesRow: NeighboringCountryViewDelegate {
+    func onCountryDidTap(country: DetailViewModel.NeighboringCountry) {
+        delegate?.onNeighboringCountryDidTap(country: country)
     }
 }

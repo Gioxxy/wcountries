@@ -102,6 +102,17 @@ class DetailViewController: UIViewController {
         addViews()
     }
     
+    // Handle swipe back to deinit coordinator
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.addTarget(self, action: #selector(onPopGesture))
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.removeTarget(self, action: #selector(onPopGesture))
+    }
+    
     private func setupView(){
         view.backgroundColor = AppColors.background
         titleLabel.text = viewModel?.country.name
@@ -307,7 +318,7 @@ class DetailViewController: UIViewController {
                 // Add neighboring countries
                 if let viewModel = viewModel.neighboringCountries {
                     let neighboringCountriesRow = NeighboringCountriesRow()
-                    neighboringCountriesRow.config(viewModel: viewModel)
+                    neighboringCountriesRow.config(self, viewModel: viewModel)
                     self.containerView.addSubview(neighboringCountriesRow)
                     neighboringCountriesRow.translatesAutoresizingMaskIntoConstraints = false
                     NSLayoutConstraint.activate([
@@ -336,7 +347,15 @@ class DetailViewController: UIViewController {
         viewModel?.onBackDidTap()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        viewModel?.onClose()
+    @objc func onPopGesture(gesture: UIGestureRecognizer) {
+        if gesture.state == .ended {
+            viewModel?.onPopGesture()
+        }
+    }
+}
+
+extension DetailViewController: NeighboringCountriesRowDelegate {
+    func onNeighboringCountryDidTap(country: DetailViewModel.NeighboringCountry) {
+        viewModel?.onNeighboringCountryDidTap(country: country)
     }
 }

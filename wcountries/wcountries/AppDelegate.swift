@@ -10,22 +10,17 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var coordinator: MainCoordinator?
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let navController = SwipeBackNavigationController()
+        let navController = UINavigationController()
         navController.setNavigationBarHidden(true, animated: true)
-        coordinator = MainCoordinator(navigationController: navController)
-        coordinator?.start()
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        // Override dark mode
-        if #available(iOS 13.0, *) {
-            window?.overrideUserInterfaceStyle = .light
-        }
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+        self.appCoordinator = AppCoordinator(window: window)
+        self.appCoordinator?.start()
         
         return true
     }

@@ -5,17 +5,16 @@
 //  Created by Gionatan Cernusco on 11/03/21.
 //
 
-import Foundation
+import UIKit
 
 protocol Coordinator: class {
-    var navigationController: SwipeBackNavigationController { get set }
+    var navigationController: UINavigationController { get set }
     var childCoordinators: [Coordinator] { get set }
-    func start()
 }
 
 extension Coordinator{
     func removeCoordinator(_ childCoordinator: Coordinator){
-        childCoordinators = childCoordinators.filter({ $0 !== childCoordinator })
+        childCoordinators = childCoordinators.filter({ !($0 === childCoordinator) })
     }
     func addCoordinator(_ childCoordinator: Coordinator){
         childCoordinators.append(childCoordinator)

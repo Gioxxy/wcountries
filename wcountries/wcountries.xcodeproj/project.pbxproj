@@ -27,6 +27,8 @@
 		9F9A525C25FA77E0006C6099 /* CountryModelTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */; };
 		9FA9DD5B25FAC01E003E6B94 /* LangFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9DD5A25FAC01E003E6B94 /* LangFilterTests.swift */; };
 		9FA9DD6025FAC0F1003E6B94 /* LangFilterTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9FA9DD5F25FAC0F1003E6B94 /* LangFilterTestData.json */; };
+		9FA9DD6B25FB5AAC003E6B94 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9DD6A25FB5AAC003E6B94 /* AppCoordinator.swift */; };
+		9FA9DD8625FB659B003E6B94 /* DetailMainCountryModelTestData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9FA9DD8525FB659B003E6B94 /* DetailMainCountryModelTestData.json */; };
 		9FACD26425EEF7F7000201FC /* MainCountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26325EEF7F7000201FC /* MainCountryModel.swift */; };
 		9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACD26C25EEFEDD000201FC /* DetailManager.swift */; };
 		9FAF3C8625EE92940059E08A /* BubbleVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */; };
@@ -37,7 +39,6 @@
 		F790E0A325E96EB1003757F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F790E0A125E96EB1003757F9 /* LaunchScreen.storyboard */; };
 		F790E0AE25E96EB1003757F9 /* MainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790E0AD25E96EB1003757F9 /* MainTests.swift */; };
 		F790E0B925E96EB1003757F9 /* wcountriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790E0B825E96EB1003757F9 /* wcountriesUITests.swift */; };
-		F790E0D425E97011003757F9 /* SwipeBackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790E0D325E97011003757F9 /* SwipeBackNavigationController.swift */; };
 		F790E0E125E9706A003757F9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790E0E025E9706A003757F9 /* MainCoordinator.swift */; };
 		F7B8CD1525E9745A00A79AFC /* CountriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD1425E9745A00A79AFC /* CountriesAPI.swift */; };
 		F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8CD1925E974D500A79AFC /* Extensions.swift */; };
@@ -90,6 +91,8 @@
 		9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryModelTestData.json; sourceTree = "<group>"; };
 		9FA9DD5A25FAC01E003E6B94 /* LangFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangFilterTests.swift; sourceTree = "<group>"; };
 		9FA9DD5F25FAC0F1003E6B94 /* LangFilterTestData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LangFilterTestData.json; sourceTree = "<group>"; };
+		9FA9DD6A25FB5AAC003E6B94 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		9FA9DD8525FB659B003E6B94 /* DetailMainCountryModelTestData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DetailMainCountryModelTestData.json; sourceTree = "<group>"; };
 		9FACD26325EEF7F7000201FC /* MainCountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCountryModel.swift; sourceTree = "<group>"; };
 		9FACD26C25EEFEDD000201FC /* DetailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailManager.swift; sourceTree = "<group>"; };
 		9FAF3C8525EE92940059E08A /* BubbleVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleVeiw.swift; sourceTree = "<group>"; };
@@ -106,7 +109,6 @@
 		F790E0B425E96EB1003757F9 /* wcountriesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wcountriesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F790E0B825E96EB1003757F9 /* wcountriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wcountriesUITests.swift; sourceTree = "<group>"; };
 		F790E0BA25E96EB1003757F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F790E0D325E97011003757F9 /* SwipeBackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeBackNavigationController.swift; sourceTree = "<group>"; };
 		F790E0E025E9706A003757F9 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		F7B8CD1425E9745A00A79AFC /* CountriesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAPI.swift; sourceTree = "<group>"; };
 		F7B8CD1925E974D500A79AFC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			children = (
 				9F9A525325FA6AF4006C6099 /* DetailTests.swift */,
 				9F9A525B25FA77E0006C6099 /* CountryModelTestData.json */,
+				9FA9DD8525FB659B003E6B94 /* DetailMainCountryModelTestData.json */,
 			);
 			path = DetailTests;
 			sourceTree = "<group>";
@@ -329,7 +332,6 @@
 			isa = PBXGroup;
 			children = (
 				9F9A51C525F40B74006C6099 /* Views */,
-				F790E0D325E97011003757F9 /* SwipeBackNavigationController.swift */,
 				F7B8CD1925E974D500A79AFC /* Extensions.swift */,
 				F7B8CD1E25E9763200A79AFC /* AppColors.swift */,
 				9F9A524625FA624B006C6099 /* Coordinator.swift */,
@@ -340,6 +342,7 @@
 		F790E0DE25E97043003757F9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				9FA9DD6A25FB5AAC003E6B94 /* AppCoordinator.swift */,
 				F7733D1725E9740000D9B87C /* API */,
 				F790E0DF25E97058003757F9 /* Main */,
 				F7B8CD5125EBF17300A79AFC /* Detail */,
@@ -530,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9A525C25FA77E0006C6099 /* CountryModelTestData.json in Resources */,
+				9FA9DD8625FB659B003E6B94 /* DetailMainCountryModelTestData.json in Resources */,
 				9FA9DD6025FAC0F1003E6B94 /* LangFilterTestData.json in Resources */,
 				9F9A523C25FA1BF5006C6099 /* MainCountryModelTestData.json in Resources */,
 			);
@@ -564,7 +568,6 @@
 				F7B8CD5325EBF19500A79AFC /* DetailCoordinator.swift in Sources */,
 				F7B8CD1A25E974D500A79AFC /* Extensions.swift in Sources */,
 				9F9A521D25F450A2006C6099 /* LangFilterListView.swift in Sources */,
-				F790E0D425E97011003757F9 /* SwipeBackNavigationController.swift in Sources */,
 				F7B8CD2B25E98EE600A79AFC /* MainGridView.swift in Sources */,
 				9F9A51CC25F40BED006C6099 /* PassThroughScrollView.swift in Sources */,
 				F7B8CD3525EA47CE00A79AFC /* CountryModel.swift in Sources */,
@@ -576,6 +579,7 @@
 				9F9A522225F54828006C6099 /* LangFilterListViewCell.swift in Sources */,
 				F790E09B25E96EB0003757F9 /* MainViewController.swift in Sources */,
 				F790E09725E96EB0003757F9 /* AppDelegate.swift in Sources */,
+				9FA9DD6B25FB5AAC003E6B94 /* AppCoordinator.swift in Sources */,
 				9F92305C25F27105005D1555 /* ContinentFilterViewCell.swift in Sources */,
 				9F9A51DC25F433A1006C6099 /* LangFilterViewController.swift in Sources */,
 				9FACD26D25EEFEDD000201FC /* DetailManager.swift in Sources */,

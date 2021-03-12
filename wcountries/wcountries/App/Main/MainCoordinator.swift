@@ -5,16 +5,16 @@
 //  Created by Gionatan Cernusco on 26/02/21.
 //
 
-import Foundation
+import UIKit
 
 class MainCoordinator: Coordinator {
-    var navigationController: SwipeBackNavigationController
+    var navigationController: UINavigationController
     var childCoordinators = [Coordinator]()
     
     var filterByLanguage: ((_ iso639_2: String)->Void)? = nil
     var cleanLanguageFilter: (()->Void)? = nil
     
-    init(navigationController: SwipeBackNavigationController){
+    init(navigationController: UINavigationController){
         self.navigationController = navigationController
     }
     

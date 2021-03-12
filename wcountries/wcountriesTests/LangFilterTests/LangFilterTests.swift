@@ -20,7 +20,7 @@ class LangFilterTests: XCTestCase {
     
     func test_getLanguages_shouldReturnData(){
         // Given
-        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: "ita")
+        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: UINavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: "ita")
         let expetaction = XCTestExpectation(description: "Expected to get languages")
         expetaction.expectedFulfillmentCount = 3
         
@@ -52,7 +52,7 @@ class LangFilterTests: XCTestCase {
     
     func test_onSearch_shouldUpdateListView(){
         // Given
-        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
+        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: UINavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
         let expetaction = XCTestExpectation(description: "Expected to update list view")
         
         sut.updateListView = {
@@ -67,7 +67,7 @@ class LangFilterTests: XCTestCase {
     
     func test_onSearchEnd_shouldUpdateListView(){
         // Given
-        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
+        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: UINavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
         let expetaction = XCTestExpectation(description: "Expected to update list view")
         
         sut.updateListView = {
@@ -82,7 +82,7 @@ class LangFilterTests: XCTestCase {
     
     func test_onLanguageSelected_shouldUpdateLanguages(){
         // Given
-        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
+        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: UINavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
         let expetaction = XCTestExpectation(description: "Expected to update viewModel languages")
         
         // When
@@ -111,7 +111,7 @@ class LangFilterTests: XCTestCase {
     
     func test_onLanguageDeselected_shouldUpdateLanguages(){
         // Given
-        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
+        let sut: LangFilterViewModel = LangFilterViewModel(LangFilterCoordinator(navigationController: UINavigationController()), manager: TestableLangFilterManager(), selectedIso639_2: nil)
         let expetaction = XCTestExpectation(description: "Expected to update viewModel languages")
         
         // When

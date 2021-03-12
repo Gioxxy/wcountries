@@ -20,7 +20,7 @@ class MainTests: XCTestCase {
 
     func test_getCountries_shouldReturnData(){
         // Given
-        let sut: MainViewModel = MainViewModel(MainCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableMainManager())
+        let sut: MainViewModel = MainViewModel(MainCoordinator(navigationController: UINavigationController()), manager: TestableMainManager())
         let expetaction = XCTestExpectation(description: "Expected to get countries")
         expetaction.expectedFulfillmentCount = 3
         
@@ -50,7 +50,7 @@ class MainTests: XCTestCase {
     
     func test_didSelectContinent_shouldSelectContinentAndReturnData(){
         // Given
-        let sut: MainViewModel = MainViewModel(MainCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableMainManager())
+        let sut: MainViewModel = MainViewModel(MainCoordinator(navigationController: UINavigationController()), manager: TestableMainManager())
         let expetaction = XCTestExpectation(description: "Expected to get countries by continent")
         expetaction.expectedFulfillmentCount = 3
         let continent = MainViewModel.RegionViewModel(.Europe, isSelected: true)
@@ -82,7 +82,7 @@ class MainTests: XCTestCase {
     
     func test_didDeselectContinent_shouldDeselectContinentAndReturnData(){
         // Given
-        let sut: MainViewModel = MainViewModel(MainCoordinator(navigationController: SwipeBackNavigationController()), manager: TestableMainManager())
+        let sut: MainViewModel = MainViewModel(MainCoordinator(navigationController: UINavigationController()), manager: TestableMainManager())
         let expetaction = XCTestExpectation(description: "Expected to get countries by continent")
         expetaction.expectedFulfillmentCount = 3
         
@@ -113,7 +113,7 @@ class MainTests: XCTestCase {
     
     func test_filterByLanguage_shouldSlectLanguageAndReturnData(){
         // Given
-        let coordinator = MainCoordinator(navigationController: SwipeBackNavigationController())
+        let coordinator = MainCoordinator(navigationController: UINavigationController())
         let sut: MainViewModel = MainViewModel(coordinator, manager: TestableMainManager())
         let expetaction = XCTestExpectation(description: "Expected to get countries by language")
         expetaction.expectedFulfillmentCount = 3
@@ -146,7 +146,7 @@ class MainTests: XCTestCase {
     
     func test_cleanLanguageFilter_shouldDeselectLanguageAndReturnData(){
         // Given
-        let coordinator = MainCoordinator(navigationController: SwipeBackNavigationController())
+        let coordinator = MainCoordinator(navigationController: UINavigationController())
         let sut: MainViewModel = MainViewModel(coordinator, manager: TestableMainManager())
         let expetaction = XCTestExpectation(description: "Expected to get countries by language")
         expetaction.expectedFulfillmentCount = 3
@@ -178,7 +178,7 @@ class MainTests: XCTestCase {
     
     func test_didTapOnCountry_shouldStartDetail(){
         // Given
-        let mainCoordinator = MainCoordinator(navigationController: SwipeBackNavigationController())
+        let mainCoordinator = MainCoordinator(navigationController: UINavigationController())
         let sut = MainViewModel(mainCoordinator, manager: TestableMainManager())
         let expetaction = XCTestExpectation(description: "Expected to get countries")
         
@@ -199,7 +199,7 @@ class MainTests: XCTestCase {
     
     func test_didTapOnFilterButton_shouldStartLangFilter(){
         // Given
-        let mainCoordinator = MainCoordinator(navigationController: SwipeBackNavigationController())
+        let mainCoordinator = MainCoordinator(navigationController: UINavigationController())
         let sut = MainViewModel(mainCoordinator, manager: TestableMainManager())
         
         // When
@@ -211,7 +211,7 @@ class MainTests: XCTestCase {
     
     func test_MainViewModel_shouldAssignValues(){
         // Given
-        let coordinator = MainCoordinator(navigationController: SwipeBackNavigationController())
+        let coordinator = MainCoordinator(navigationController: UINavigationController())
         let manager = TestableMainManager()
         
         // When

@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol NeighboringCountryViewDelegate: class {
+    func onCountryDidTap(country: DetailViewModel.NeighboringCountry)
+}
+
 class NeighboringCountryView: UIView {
+    private weak var delegate: NeighboringCountryViewDelegate?
     private var viewModel: DetailViewModel.NeighboringCountry?
     
     private let imageView: UIImageView = {
@@ -18,7 +23,8 @@ class NeighboringCountryView: UIView {
         return imageView
     }()
     
-    func config(viewModel: DetailViewModel.NeighboringCountry){
+    func config(_ delegate: NeighboringCountryViewDelegate, viewModel: DetailViewModel.NeighboringCountry){
+        self.delegate = delegate
         self.viewModel = viewModel
         imageView.imageFromNetwork(
             url: viewModel.imageURL,
@@ -45,6 +51,8 @@ class NeighboringCountryView: UIView {
         self.layer.masksToBounds = false
         self.layer.shouldRasterize = true
         self.layer.rasterizationScale = UIScreen.main.scale
+        
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
     }
     
     private func addViews() {
@@ -56,5 +64,11 @@ class NeighboringCountryView: UIView {
             imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+    }
+    
+    @objc func onTap(){
+        if let viewModel = viewModel {
+            delegate?.onCountryDidTap(country: viewModel)
+        }
     }
 }

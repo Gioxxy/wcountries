@@ -1,0 +1,32 @@
+[
+   {
+      "name":"Austria",
+      "alpha2Code":"AT",
+      "alpha3Code":"AUT"
+   },
+   {
+      "name":"France",
+      "alpha2Code":"FR",
+      "alpha3Code":"FRA"
+   },
+   {
+      "name":"San Marino",
+      "alpha2Code":"SM",
+      "alpha3Code":"SMR"
+   },
+   {
+      "name":"Slovenia",
+      "alpha2Code":"SI",
+      "alpha3Code":"SVN"
+   },
+   {
+      "name":"Switzerland",
+      "alpha2Code":"CH",
+      "alpha3Code":"CHE"
+   },
+   {
+      "name":"Holy See",
+      "alpha2Code":"VA",
+      "alpha3Code":"VAT"
+   }
+]

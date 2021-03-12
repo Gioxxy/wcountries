@@ -5,7 +5,7 @@
 //  Created by Gionatan Cernusco on 06/03/21.
 //
 
-import Foundation
+import UIKit
 
 protocol LangFilterCoordinatorDelegate: class {
     func onClose(_ coordinator: LangFilterCoordinator)
@@ -14,13 +14,13 @@ protocol LangFilterCoordinatorDelegate: class {
 }
 
 class LangFilterCoordinator: Coordinator {
-    var navigationController: SwipeBackNavigationController
+    var navigationController: UINavigationController
     var childCoordinators = [Coordinator]()
     
     private weak var delegate: LangFilterCoordinatorDelegate?
     private var selectedIso639_2: String?
     
-    init(_ delegate: LangFilterCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController, selectedIso639_2: String? = nil){
+    init(_ delegate: LangFilterCoordinatorDelegate? = nil, navigationController: UINavigationController, selectedIso639_2: String? = nil){
         self.delegate = delegate
         self.navigationController = navigationController
         self.selectedIso639_2 = selectedIso639_2

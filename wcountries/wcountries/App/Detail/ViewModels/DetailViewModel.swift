@@ -9,12 +9,14 @@ import Foundation
 
 protocol DetailViewModelDelegate: class {
     func onBackDidTap()
-    func onClose()
+    func onPopGesture()
+    func startDetail(model: MainCountryModel)
 }
 
 class DetailViewModel {
     private weak var delegate: DetailViewModelDelegate?
     private var manager: DetailManager
+    private var neighboringCountriesModel = [MainCountryModel]()
     private(set) var country: CountryViewModel
     private(set) var neighboringCountries: NeighboringCountriesRow?
     
@@ -33,12 +35,13 @@ class DetailViewModel {
                 guard let self = self else { return }
                 self.country = CountryViewModel(model: model)
                 if let borders = model.borders, borders.count > 0 {
-                    self.manager.getAlpha2Codes(
+                    self.manager.getNeighboringCountries(
                         alpha3Codes: borders,
-                        onSuccess: {  [weak self] bordersAlpha2Codes in
+                        onSuccess: {  [weak self] countries in
                             guard let self = self else { return }
-                            if bordersAlpha2Codes.count > 0 {
-                                self.neighboringCountries = NeighboringCountriesRow(alpha2Codes: bordersAlpha2Codes)
+                            if countries.count > 0 {
+                                self.neighboringCountriesModel = countries
+                                self.neighboringCountries = NeighboringCountriesRow(model: countries)
                             }
                             onCompletion?()
                             onSuccess?(self)
@@ -64,8 +67,14 @@ class DetailViewModel {
         delegate?.onBackDidTap()
     }
     
-    func onClose(){
-        delegate?.onClose()
+    func onPopGesture(){
+        delegate?.onPopGesture()
+    }
+    
+    func onNeighboringCountryDidTap(country: NeighboringCountry){
+        if let model = neighboringCountriesModel.first(where: { $0.alpha2Code == country.alpha2Code}){
+            delegate?.startDetail(model: model)
+        }
     }
 }
 
@@ -116,13 +125,13 @@ extension DetailViewModel {
                 details.append(DetailRowViewModel(title: "Capital", detail: capital))
             }
             if let population = model.population, population != 0 {
-                details.append(DetailRowViewModel(title: "Population", detail: String(format: "%ld", locale: Locale.current, population)))
+                details.append(DetailRowViewModel(title: "Population", detail: String(format: "%ld", locale: Locale(identifier: "en"), population)))
             }
             if let latlon = model.latlng, latlon.count > 0 {
                 details.append(DetailRowViewModel(title: "Latitude longitude", detail: latlon[0].description + ", " + latlon[1].description))
             }
             if let area = model.area, area != 0 {
-                details.append(DetailRowViewModel(title: "Area", detail: String(format: "%.2f %@", locale: Locale.current, area, "Km²")))
+                details.append(DetailRowViewModel(title: "Area", detail: String(format: "%.2f %@", locale: Locale(identifier: "en"), area, "Km²")))
             }
             if let languages = model.languages, languages.count > 0 {
                 let title = languages.count > 1 ? "Languages" : "Language"
@@ -174,9 +183,9 @@ extension DetailViewModel {
         let title: String
         let neighboringCountries: [NeighboringCountry]
         
-        init(alpha2Codes: [String]) {
-            self.title = alpha2Codes.count > 1 ? "Neighboring countries" : "Neighboring country"
-            self.neighboringCountries = alpha2Codes.map({NeighboringCountry(alpha2Code: $0)})
+        init(model: [MainCountryModel]) {
+            self.title = model.count > 1 ? "Neighboring countries" : "Neighboring country"
+            self.neighboringCountries = model.map({NeighboringCountry(alpha2Code: $0.alpha2Code)})
         }
     }
     

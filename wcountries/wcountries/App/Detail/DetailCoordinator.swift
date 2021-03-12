@@ -5,20 +5,20 @@
 //  Created by Gionatan Cernusco on 28/02/21.
 //
 
-import Foundation
+import UIKit
 
 protocol DetailCoordinatorDelegate: class {
     func onClose(_ coordinator: DetailCoordinator)
 }
 
-class DetailCoordinator: Coordinator {
-    var navigationController: SwipeBackNavigationController
+class DetailCoordinator: Coordinator, DetailCoordinatorDelegate {
+    var navigationController: UINavigationController
     var childCoordinators = [Coordinator]()
     
     private weak var delegate: DetailCoordinatorDelegate?
     private var model: MainCountryModel
     
-    init(_ delegate: DetailCoordinatorDelegate? = nil, navigationController: SwipeBackNavigationController, model: MainCountryModel){
+    init(_ delegate: DetailCoordinatorDelegate? = nil, navigationController: UINavigationController, model: MainCountryModel){
         self.delegate = delegate
         self.navigationController = navigationController
         self.model = model
@@ -33,15 +33,26 @@ class DetailCoordinator: Coordinator {
     deinit {
         print(String(describing: self) + " deinit")
     }
+    
+    func onClose(_ coordinator: DetailCoordinator) {
+        removeCoordinator(coordinator)
+    }
 }
 
 // MARK: - DetailViewModelDelegate
 extension DetailCoordinator: DetailViewModelDelegate {
     func onBackDidTap() {
         navigationController.popViewController(animated: true)
+        delegate?.onClose(self)
     }
     
-    func onClose(){
+    func onPopGesture(){
         delegate?.onClose(self)
+    }
+    
+    func startDetail(model: MainCountryModel) {
+        let detailCoordinator = DetailCoordinator(self, navigationController: self.navigationController, model: model)
+        addCoordinator(detailCoordinator)
+        detailCoordinator.start()
     }
 }

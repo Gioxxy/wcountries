@@ -21,7 +21,7 @@ class DetailTests: XCTestCase {
     func test_getCountry_shouldReturnData(){
         // Given
         let mainCountryModel = MainCountryModel(name: "Italy", alpha2Code: "IT", alpha3Code: "ITA")
-        let coordinator = DetailCoordinator(navigationController: SwipeBackNavigationController(), model: mainCountryModel)
+        let coordinator = DetailCoordinator(navigationController: UINavigationController(), model: mainCountryModel)
         let sut: DetailViewModel = DetailViewModel(coordinator, manager: TestableDetailManager(), model: mainCountryModel)
         let expetaction = XCTestExpectation(description: "Expected to get country")
         expetaction.expectedFulfillmentCount = 3
@@ -77,6 +77,28 @@ class DetailTests: XCTestCase {
         XCTAssertEqual(sut.country.details[6].title, "Timezone")
         XCTAssertEqual(sut.country.details[6].detail, "UTC+01:00")
     }
+    
+    func test_onNeighboringCountryDidTap_shouldStartDetail(){
+        // Given
+        let model = MainCountryModel(name: "Italy", alpha2Code: "IT", alpha3Code: "ITA")
+        let detailCoordinator = DetailCoordinator(navigationController: UINavigationController(), model: model)
+        let sut = DetailViewModel(detailCoordinator, manager: TestableDetailManager(), model: model)
+        let expetaction = XCTestExpectation(description: "Expected to start detail")
+        
+        // When
+        sut.getCountry(
+            alpha3Code: model.alpha3Code,
+            onSuccess: { viewModel in
+                expetaction.fulfill()
+            })
+        
+        wait(for: [expetaction], timeout: 5.0)
+        
+        sut.onNeighboringCountryDidTap(country: DetailViewModel.NeighboringCountry(alpha2Code: "AT"))
+        
+        // Then
+        XCTAssertGreaterThan(detailCoordinator.childCoordinators.count, 0)
+    }
 }
 
 extension DetailTests {
@@ -85,8 +107,8 @@ extension DetailTests {
             onSuccess?(countryModel)
         }
         
-        override func getAlpha2Codes(alpha3Codes: [String], onSuccess: ((_ mainModel: [String])->Void)? = nil, onError: ((String)->Void)? = nil){
-            onSuccess?(["AT", "FR", "SM", "SI", "CH", "VA"])
+        override func getNeighboringCountries(alpha3Codes: [String], onSuccess: (([MainCountryModel]) -> Void)? = nil, onError: ((String) -> Void)? = nil) {
+            onSuccess?(neighboringCountriesModel)
         }
     }
     
@@ -99,6 +121,20 @@ extension DetailTests {
             let jsonDecoder = JSONDecoder()
             let mainCountryModel: CountryModel = try jsonDecoder.decode(CountryModel.self, from: data)
             return mainCountryModel
+        }catch{
+            fatalError()
+        }
+    }
+    
+    static var neighboringCountriesModel: [MainCountryModel]{
+        guard let url = Bundle(for: Self.self).url(forResource: "DetailMainCountryModelTestData", withExtension: "json") else {
+            fatalError()
+        }
+        do{
+            let data = try Data(contentsOf: url)
+            let jsonDecoder = JSONDecoder()
+            let neighboringCountriesModel: [MainCountryModel] = try jsonDecoder.decode([MainCountryModel].self, from: data)
+            return neighboringCountriesModel
         }catch{
             fatalError()
         }
