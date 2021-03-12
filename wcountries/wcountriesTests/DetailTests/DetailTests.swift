@@ -83,7 +83,7 @@ class DetailTests: XCTestCase {
         let model = MainCountryModel(name: "Italy", alpha2Code: "IT", alpha3Code: "ITA")
         let detailCoordinator = DetailCoordinator(navigationController: UINavigationController(), model: model)
         let sut = DetailViewModel(detailCoordinator, manager: TestableDetailManager(), model: model)
-        let expetaction = XCTestExpectation(description: "Expected to start detail")
+        let expetaction = XCTestExpectation(description: "Expected to get country")
         
         // When
         sut.getCountry(

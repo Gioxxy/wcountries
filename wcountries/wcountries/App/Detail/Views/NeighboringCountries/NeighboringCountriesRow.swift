@@ -86,6 +86,7 @@ class NeighboringCountriesRow: UIView {
     }
 }
 
+// MARK: - NeighboringCountryViewDelegate
 extension NeighboringCountriesRow: NeighboringCountryViewDelegate {
     func onCountryDidTap(country: DetailViewModel.NeighboringCountry) {
         delegate?.onNeighboringCountryDidTap(country: country)

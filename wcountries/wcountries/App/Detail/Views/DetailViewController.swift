@@ -95,6 +95,8 @@ class DetailViewController: UIViewController {
         return label
     }()
     
+    let scrollView = PassThroughScrollView()
+    
     func config(viewModel: DetailViewModel) {
         self.viewModel = viewModel
         
@@ -116,6 +118,7 @@ class DetailViewController: UIViewController {
     private func setupView(){
         view.backgroundColor = AppColors.background
         titleLabel.text = viewModel?.country.name
+        scrollView.delegate = self
         
         let strokeTextAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.strokeColor: AppColors.accent,
@@ -178,7 +181,6 @@ class DetailViewController: UIViewController {
         ])
         
         // Add scrollView
-        let scrollView = PassThroughScrollView()
         scrollView.contentInset = UIEdgeInsets(top: 300, left: 18, bottom: 18, right: 18)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -354,8 +356,28 @@ class DetailViewController: UIViewController {
     }
 }
 
+// MARK: - NeighboringCountriesRowDelegate
 extension DetailViewController: NeighboringCountriesRowDelegate {
     func onNeighboringCountryDidTap(country: DetailViewModel.NeighboringCountry) {
         viewModel?.onNeighboringCountryDidTap(country: country)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension DetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < -300 {
+            UIView.animate(withDuration: 0.5) {
+                self.titleLabel.alpha = 1
+                self.backButton.alpha = 1
+                self.subTitleLabel.alpha = 1
+            }
+        } else if self.titleLabel.alpha == 1 {
+            UIView.animate(withDuration: 0.5) {
+                self.titleLabel.alpha = 0
+                self.backButton.alpha = 0
+                self.subTitleLabel.alpha = 0
+            }
+        }
     }
 }

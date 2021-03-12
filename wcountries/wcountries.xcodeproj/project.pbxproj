@@ -311,9 +311,9 @@
 		F790E0AC25E96EB1003757F9 /* wcountriesTests */ = {
 			isa = PBXGroup;
 			children = (
-				9FA9DD4E25FABFC9003E6B94 /* LangFilterTests */,
 				9F9A525125FA6AB8006C6099 /* MainTests */,
 				9F9A525225FA6AC8006C6099 /* DetailTests */,
+				9FA9DD4E25FABFC9003E6B94 /* LangFilterTests */,
 				F790E0AF25E96EB1003757F9 /* Info.plist */,
 			);
 			path = wcountriesTests;
