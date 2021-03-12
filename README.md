@@ -2,7 +2,7 @@
 wcountries lists all countries of the world and lets the user to view their details.
 Also allows users to filter the various countries by continent and/or language.
 
-The app is written using Swift 5.3, iOS 14.4 as development target and MVVM + Coordinators patterns.
+The app is written using Swift 5.3, iOS 14.4 as deployment target and MVVM + Coordinators patterns.
 UI is created without the use of Storyboard and Xib.
 
 wcountries uses the [restcountries.eu](http://restcountries.eu) API for countries data and [flagcdn.com](https://flagcdn.com) API for flag images.
